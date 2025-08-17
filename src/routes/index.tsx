@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import RootLayout from '@/app/layouts/RootLayout'
 import { MainPage } from '@/pages/MainPage'
 import { NotFoundPage } from '@/pages/NotFound'
 import SocialLogin from '@/pages/SocialLogin'
@@ -8,6 +9,7 @@ import { PaymentCheckoutPage, SuccessPage, FailPage } from '@/shared/api/TossPay
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <RootLayout />,
     errorElement: <NotFoundPage />,
     children: [
       {
