@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useRef } from 'react'
 import { apiClient } from './client'
+import { generateCustomerKey } from '@/shared/utils/generateCustomerKey'
 
 // ------  SDK 초기화 ------
 // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
 const clientKey = 'test_ck_kYG57Eba3GR0DPKMQ7X98pWDOxmA'
-const customerKey = 'uV6RuDO4Q02TEnGoWw_ct'
+
 export function PaymentCheckoutPage() {
   const [payment, setPayment] = useState<TossPaymentsPayment | null>(null)
+  const [customerKey] = useState(() => generateCustomerKey())
+
   useEffect(() => {
     async function fetchPayment() {
       try {
@@ -63,7 +66,7 @@ export function SuccessPage() {
       didConfirm.current = true
 
       apiClient
-        .post(`/api/payment/card`, {
+        .post(`/public/payment/card`, {
           headers: {
             'Content-Type': 'application/json',
           },
