@@ -1,1 +1,50 @@
 @import 'tailwindcss';
+
+/* 폰트 설정 */
+@font-face {
+  font-family: 'SUIT';
+  src: url('assets/fonts/SUIT-Variable.woff2') format('woff2');
+}
+
+/* 테마 설정 */
+@theme {
+  --font-family-sans: 'SUIT', system-ui, sans-serif;
+
+  /* 브랜드 컬러  */
+  --color-primary: #018941;
+  --color-primary-100: #CCF5CF;
+  --color-primary-200: #8EED9F;
+  --color-primary-300: #53D777;
+  --color-primary-400: #38BA68;
+  --color-primary-500: #018941;
+  --color-primary-600: #007543;
+  --color-primary-700: #006242;
+  --color-primary-800: #004F3D;
+  --color-primary-900: #004139;
+  --color-background: #F8FFF8;
+  --color-background2: #EFF7EC;
+
+  /* 그레이 스케일 */
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #EFEFEF;
+  --color-gray-300: #E2E2E2;
+  --color-gray-400: #BFBFBF;
+  --color-gray-500: #A0A0A0;
+  --color-gray-600: #777777;
+  --color-gray-700: #636363;
+  --color-gray-800: #444444;
+  --color-gray-900: #232527;
+
+  /* 시맨틱 컬러 */
+  --color-active: #116ED8;
+  --color-warning: #F9C802;
+  --color-error: #DB3448;
+  --color-info: #3b82f6;
+
+  --container-sm: 540px;
+}
+
+/* 글로벌 스타일 */
+html {
+  font-family: var(--font-family-sans);
+}
