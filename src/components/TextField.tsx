@@ -1,0 +1,50 @@
+import { useState } from 'react'
+
+interface TextFieldProps {
+    value: string;
+    className?: string;
+    onChange: (value: string) => void;
+    name?: string;
+    hasError?: boolean;
+    errorMessage?: string;
+    isValid?: boolean;
+    onBlur?: () => void;
+}
+
+export const TextField:React.FC<TextFieldProps> = ({value, className, onChange, name, hasError, errorMessage, isValid, onBlur}) => {
+    const [isFocused, setIsFocused] = useState(false)
+
+    const getBorderColor = () => {
+        if (isFocused) {
+            return 'border-primary-500' // focus 시 대표색
+        } else if (hasError) {
+            return 'border-error' // blur 후 조건 불만족 시 에러색
+        } else if (isValid) {
+            return 'border-primary-500' // blur 후 조건 만족 시 대표색 유지
+        } else {
+            return 'border-gray-500' // 기본 상태
+        }
+    }
+
+    return (
+        <div className='w-full'>
+            <div className={`w-full h-14 bg-white border rounded-md transition-colors duration-200 ${getBorderColor()}`}>
+                <input
+                className={`w-full h-14 outline-none p-5 bg-transparent ${className}`}
+                type="text"
+                value={value}
+                name={name}
+                placeholder='여기에 입력하세요.'
+                onChange={(e) => onChange(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => {
+                    setIsFocused(false)
+                    onBlur?.()
+                }} />
+            </div>
+            {!isFocused && hasError && errorMessage && (
+                <p className="text-error text-sm mt-1 ml-1">{errorMessage}</p>
+            )}
+        </div>
+    )
+}
