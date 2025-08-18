@@ -5,6 +5,7 @@ import { NotFoundPage } from '@/pages/NotFound'
 import SocialLogin from '@/pages/SocialLogin'
 import LoginPage from '@/pages/LoginPage'
 import { PaymentCheckoutPage, SuccessPage, FailPage } from '@/shared/api/TossPayments'
+import { ComponentTestPage } from '@/pages/ComponentTestPage'
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/test',
+    element: <ComponentTestPage />,
+  }
 ])
 
 
