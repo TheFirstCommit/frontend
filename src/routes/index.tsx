@@ -16,6 +16,9 @@ import LandingPage from '@/pages/LandingPage'
 import MyFamily from '@/pages/Family/MyFamily'
 import ElderInfoPage from '@/pages/Family/ElderInfoPage'
 import ElderInfo_EditPage from '@/pages/Family/ElderInfo_EditPage'
+import DaumApiTest from '@/components/DaumApiTest'
+import PdfTestPage from "@/pages/PdfTestPage";
+import RemotePdfPage from '@/pages/RemotePdfPage';
 
 export const router = createBrowserRouter([
   {
@@ -87,7 +90,17 @@ export const router = createBrowserRouter([
       {
         path: 'my-family/elder-info/edit',
         element: <ElderInfo_EditPage />,
-      }
+      },
+      {
+        path: '/daumapitest',
+        element: <DaumApiTest />
+      },
+      {
+        path: "/pdftest", element: <PdfTestPage />
+      },
+      {
+        path: "/pdfviewer", element: <RemotePdfPage />
+      },
     ],
   },
   {
