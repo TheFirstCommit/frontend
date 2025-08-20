@@ -70,7 +70,7 @@ const JoinPage:React.FC = () => {
     }
 
     return (
-        <div className='min-h-dvh flex flex-col px-6'>
+        <div className='min-h-[calc(100vh-56px)] flex flex-col px-6'>
             <div className='flex flex-col gap-3 items-center mt-auto'>
                 <div>로고</div>
                 <p className='text-[20px] font-semibold'>그룹 리더로부터 초대받으셨나요?</p>
