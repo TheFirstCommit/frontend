@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
   }
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <div className="fixed top-0 left-0 right-0 z-50 drop-shadow-lg">
       <div className="flex justify-between items-center h-14 bg-white px-4 max-w-sm mx-auto">
         <img src={Icon_Back} alt="back" className="w-9 h-9 cursor-pointer" onClick={handleBackClick} />
         <p className="font-bold text-[16px]">{title}</p>
