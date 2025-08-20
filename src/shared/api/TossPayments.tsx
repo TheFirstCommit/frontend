@@ -1,6 +1,6 @@
 import { loadTossPayments, type TossPaymentsPayment } from '@tosspayments/tosspayments-sdk'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 import { apiClient } from './client'
 import { generateCustomerKey } from '@/shared/utils/generateCustomerKey'
@@ -54,6 +54,7 @@ export function PaymentCheckoutPage() {
 
 export function SuccessPage() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const didConfirm = useRef(false)
 
   useEffect(() => {
@@ -65,8 +66,8 @@ export function SuccessPage() {
       if (didConfirm.current) return
       didConfirm.current = true
 
-      apiClient
-        .post(`/public/payment/card`, {
+      try {
+        await apiClient.post(`/public/payment/card`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -75,22 +76,17 @@ export function SuccessPage() {
             authKey: searchParams.get('authKey'),
           },
         })
-        .then(res => {
-          console.log(res)
-        })
 
-      // 결제 성공 비즈니스 로직을 구현하세요.
-      const timeout = setTimeout(() => {
-        if (window.opener && !window.opener.closed) {
-          window.opener.postMessage('payment-success', window.location.origin)
-          window.close()
-        }
-      }, 500)
-
-      return () => clearTimeout(timeout)
+        // API 통신 성공 후 PaymentRegister 페이지로 리다이렉트
+        navigate('/family-group/create/payment?status=success')
+      } catch (error) {
+        console.error('Payment confirmation error:', error)
+        // API 통신 실패 시에도 PaymentRegister 페이지로 리다이렉트 (실패 상태로)
+        navigate('/family-group/create/payment?status=fail&message=결제 확인 중 오류가 발생했습니다.')
+      }
     }
     confirm()
-  }, [])
+  }, [searchParams, navigate])
 
   return (
     <div className="result wrapper">
@@ -98,6 +94,7 @@ export function SuccessPage() {
         <p>카드 등록 성공</p>
         <div>customerKey: {searchParams.get('customerKey')}</div>
         <div>authKey: {searchParams.get('authKey')}</div>
+        <p>PaymentRegister 페이지로 이동 중...</p>
       </div>
     </div>
   )
@@ -105,6 +102,13 @@ export function SuccessPage() {
 
 export function FailPage() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // 실패 시 PaymentRegister 페이지로 리다이렉트
+    const errorMessage = searchParams.get('message') || '카드 등록에 실패했습니다.'
+    navigate(`/family-group/create/payment?status=fail&message=${encodeURIComponent(errorMessage)}`)
+  }, [searchParams, navigate])
 
   return (
     <div className="result wrapper">
@@ -112,6 +116,7 @@ export function FailPage() {
         <h2>결제 실패</h2>
         <p>{`에러 코드: ${searchParams.get('code')}`}</p>
         <p>{`실패 사유: ${searchParams.get('message')}`}</p>
+        <p>PaymentRegister 페이지로 이동 중...</p>
       </div>
     </div>
   )
