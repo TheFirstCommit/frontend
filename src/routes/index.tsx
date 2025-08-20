@@ -13,6 +13,9 @@ import CreateGroup from '@/pages/OnBoarding/CreateGroup'
 import PaymentRegister from '@/pages/OnBoarding/PaymentRegister'
 import JoinPage from '@/pages/OnBoarding/JoinPage'
 import LandingPage from '@/pages/LandingPage'
+import MyFamily from '@/pages/Family/MyFamily'
+import ElderInfoPage from '@/pages/Family/ElderInfoPage'
+import ElderInfo_EditPage from '@/pages/Family/ElderInfo_EditPage'
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +76,18 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'my-family',
+        element: <MyFamily />,
+      },
+      {
+        path: 'my-family/elder-info',
+        element: <ElderInfoPage />,
+      },
+      {
+        path: 'my-family/elder-info/edit',
+        element: <ElderInfo_EditPage />,
+      }
     ],
   },
   {

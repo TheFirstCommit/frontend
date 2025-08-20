@@ -1,0 +1,71 @@
+import edit_active from '@/assets/Icons/edit_Property 1=text.svg'
+import profileImage from '@/assets/images/profile.png'
+import { TextField } from '@/components/TextField'
+import { useState } from 'react'
+import { Button } from '@/components/Buttons'
+import { useNavigate } from 'react-router-dom'
+import { TextField_Elder } from '@/components/TextField_Elder'
+
+const ElderInfoPage: React.FC = () => {
+    const navigate = useNavigate()
+    const [name, setName] = useState('테스트')
+    const [birthday, setBirthday] = useState('1952년 07월 06일')
+    const [phone, setPhone] = useState('010-1234-5678')
+    const [addressNumber, setAddressNumber] = useState('08528')
+    const [address, setAddress] = useState('서울특별시 금천구 가산동')
+    const [addressDetail, setAddressDetail] = useState('101동 101호')
+    const [isLeader, setIsLeader] = useState(true)
+
+    const handleEdit = () => {
+        navigate('/my-family/elder-info/edit')
+    }
+
+    return (
+        <div className='bg-background min-h-[calc(100vh-56px)] flex flex-col px-6 gap-4'>
+
+            <div className='flex flex-col gap-4'>
+                <div className='flex flex-row justify-between mt-6'>
+                    <p className='text-[16px]'><span className='font-semibold'>소식지를 전달받을 분</span>이에요.</p>
+                    {isLeader ? <img src={edit_active} alt="edit" onClick={handleEdit} /> : <div className='' />}
+                </div>
+                <img src={profileImage} alt="profile" className='w-[84px] h-[84px] mx-auto' />
+            </div>
+
+            <div className='flex flex-col gap-4'>
+                <p className='text-[16px] font-normal'>이름</p>
+                <TextField_Elder value={name} />
+            </div>
+
+            <div className='flex flex-col gap-4'>
+                <p className='text-[16px] font-normal'>생년월일</p>
+                <TextField_Elder value={birthday} />
+            </div>
+
+            <div className='flex flex-col gap-4'>
+                <p className='text-[16px] font-normal'>전화번호</p>
+                <TextField_Elder value={phone} />
+            </div>
+
+            <div className='flex flex-col gap-3'>
+                    <p>배송지 주소</p>
+                    <div className='flex flex-col gap-3'>
+                        <div className='flex gap-2'>
+                            <TextField_Elder
+                                value={addressNumber}
+                            />
+                            <div className='w-[50%]'/>
+                        </div>
+                        <TextField_Elder
+                            value={address}
+                        />
+                        <TextField_Elder
+                            value={addressDetail}
+                        />
+                    </div>
+                </div>
+
+        </div>
+    )
+}
+
+export default ElderInfoPage
