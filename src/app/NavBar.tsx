@@ -44,11 +44,11 @@ export const NavBar: React.FC = () => {
 
                 {/* 가족그룹 탭 */}
                 <div
-                    className={`flex flex-col items-center cursor-pointer ${isActive('/family-group') ? 'text-gray-900' : 'text-gray-400'}`}
-                    onClick={() => handleTabClick('/family-group')}
+                    className={`flex flex-col items-center cursor-pointer ${isActive('/my-family') ? 'text-gray-900' : 'text-gray-400'}`}
+                    onClick={() => handleTabClick('/my-family')}
                 >
                     <img
-                    src={isActive('/family-group') ? Icon_Family_On : Icon_Family_Off}
+                    src={isActive('/my-family') ? Icon_Family_On : Icon_Family_Off}
                     alt="family"
                     className="w-12 h-15"
                     />

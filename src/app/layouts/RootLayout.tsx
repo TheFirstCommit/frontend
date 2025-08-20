@@ -8,7 +8,7 @@ export default function RootLayout() {
   // Header와 Footer를 숨길 경로들
   const hideHeaderPaths = ['/', '/login', '/signup', '/signup/complete', '/billing', '/family-group']
 
-  const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/family-group', '/family-group/create', '/billing', '/posting', '/family-group/create/payment', '/family-group/join']
+  const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/family-group', '/family-group/create', '/billing', '/posting', '/family-group/create/payment', '/family-group/join', '/my-family/elder-info', '/my-family/elder-info/edit']
 
   // 현재 경로가 Header를 숨겨야 하는지 확인
   const shouldHideHeader = hideHeaderPaths.includes(location.pathname)
@@ -21,6 +21,9 @@ export default function RootLayout() {
     const path = location.pathname
 
     if (path.includes('/family-group/create/payment')) return '결제 수단 등록하기'
+    if (path.includes('/my-family/elder-info/edit')) return '받는 분 정보 수정하기기'
+    if (path.includes('/my-family/elder-info')) return '받는 분 정보'
+    if (path.includes('/my-family')) return '나의 가족'
     if (path.startsWith('/home')) return '홈'
     if (path.includes('/family-group/join')) return ''
     if (path.includes('/family-group')) return '가족 그룹 생성하기'
