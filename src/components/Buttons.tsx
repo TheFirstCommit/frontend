@@ -8,7 +8,7 @@ interface CTAProps {
 
 export const CTA:React.FC<CTAProps> = ({text, className, disabled, variant, onClick}) => {
     return (
-            <button className={`py-4 w-full  rounded-4xl font-bold ${className} ${disabled ? 'opacity-40' : 'hover:cursor-pointer'} ${variant === 'main' ? 'bg-primary text-gray-100' : 'bg-background border border-primary text-primary-900'}`} onClick={onClick}>{text}</button>
+            <button className={`py-4 w-full  rounded-4xl font-bold ${className} ${disabled ? 'opacity-40' : 'hover:cursor-pointer'} ${variant === 'main' ? 'bg-primary text-gray-100' : 'bg-background border border-primary text-primary-900'}`} disabled={disabled} onClick={onClick}>{text}</button>
     )
 }
 
@@ -35,7 +35,7 @@ interface SocialButtonProps {
 }
 export const SocialButton:React.FC<SocialButtonProps> = ({text, className, onClick, icon}) => {
     return (
-        <button className={`py-[17px] px-[6.5px] w-full rounded-sm font-bold ${className} hover:cursor-pointer flex items-center gap-2`} onClick={onClick}>
+        <button className={`py-[17px] px-[6.5px] w-full rounded-sm font-semibold text-sm ${className} hover:cursor-pointer flex items-center gap-2`} onClick={onClick}>
             <img src={icon} alt='' />
             <span>{text}</span>
         </button>

@@ -11,9 +11,24 @@ interface Dropdown_DateProps {
   onChange: (date: DateValue, formattedDate: string) => void
   className?: string
   disabled?: boolean
+  hasError?: boolean
+  errorMessage?: string
+  defaultYear?: number
+  defaultMonth?: number
+  defaultDay?: number
 }
 
-export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({ value, onChange, className, disabled }) => {
+export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
+  value,
+  onChange,
+  className,
+  disabled,
+  hasError = false,
+  errorMessage,
+  defaultYear = 1950,
+  defaultMonth = 1,
+  defaultDay = 1,
+}) => {
   const [isYearOpen, setIsYearOpen] = useState(false)
   const [isMonthOpen, setIsMonthOpen] = useState(false)
   const [isDayOpen, setIsDayOpen] = useState(false)
@@ -101,7 +116,7 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({ value, onChange, c
     onSelect,
     placeholder,
     suffix,
-    dropdownType
+    dropdownType,
   }: {
     isOpen: boolean
     selectedValue: number
@@ -121,13 +136,13 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({ value, onChange, c
         let targetValue: number
         switch (dropdownType) {
           case 'year':
-            targetValue = selectedValue > 0 ? selectedValue : 1950
+            targetValue = selectedValue > 0 ? selectedValue : defaultYear
             break
           case 'month':
-            targetValue = selectedValue > 0 ? selectedValue : 1
+            targetValue = selectedValue > 0 ? selectedValue : defaultMonth
             break
           case 'day':
-            targetValue = selectedValue > 0 ? selectedValue : 1
+            targetValue = selectedValue > 0 ? selectedValue : defaultDay
             break
           default:
             return
@@ -139,7 +154,17 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({ value, onChange, c
           dropdownRef.current.scrollTop = targetIndex * itemHeight
         }
       }
-    }, [isOpen, options, dropdownType, selectedValue])
+    }, [isOpen, options, dropdownType, selectedValue, defaultYear, defaultMonth, defaultDay])
+
+    const getBorderColor = () => {
+      if (hasError) {
+        return 'border-error'
+      } else if (isActive) {
+        return 'border-primary-500'
+      } else {
+        return 'border-gray-500'
+      }
+    }
 
     return (
       <div className="relative">
@@ -147,26 +172,25 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({ value, onChange, c
           type="button"
           onClick={() => handleDropdownClick(dropdownType)}
           className={`w-full h-11 bg-white border rounded-xl px-4 text-left font-medium transition-colors duration-200 ${
-            disabled ? 'opacity-40 cursor-not-allowed border-gray-500' :
-            isActive ? 'border-primary-500' : 'border-gray-500 hover:cursor-pointer'
-          } ${className}`}
-        >
+            disabled ? 'opacity-40 cursor-not-allowed border-gray-500' : `${getBorderColor()} hover:cursor-pointer`
+          } ${className}`}>
           <span className={hasValue ? 'text-gray-900' : 'text-gray-500'}>
             {hasValue ? `${selectedValue}${suffix}` : placeholder}
           </span>
         </button>
 
         {isOpen && (
-          <div ref={dropdownRef} className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto scrollbar-hide">
-            {options.map((option) => (
+          <div
+            ref={dropdownRef}
+            className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto scrollbar-hide">
+            {options.map(option => (
               <button
                 key={option}
                 type="button"
                 onClick={() => onSelect(option)}
                 className={`w-full px-4 py-3 text-left hover:bg-primary-100 transition-colors ${
                   selectedValue === option ? 'bg-primary-500 text-white' : 'text-gray-900'
-                }`}
-              >
+                }`}>
                 {option}
               </button>
             ))}
@@ -190,42 +214,45 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({ value, onChange, c
   }
 
   return (
-    <div className="flex gap-3">
-      <div className="flex-1">
-        <DropdownSelect
-          isOpen={isYearOpen}
-          selectedValue={value.year}
-          options={years}
-          onSelect={handleYearChange}
-          placeholder="연도"
-          suffix="년"
-          dropdownType="year"
-        />
-      </div>
+    <div className="w-full">
+      <div className="flex gap-3">
+        <div className="flex-1">
+          <DropdownSelect
+            isOpen={isYearOpen}
+            selectedValue={value.year}
+            options={years}
+            onSelect={handleYearChange}
+            placeholder="년"
+            suffix="년"
+            dropdownType="year"
+          />
+        </div>
 
-      <div className="flex-1">
-        <DropdownSelect
-          isOpen={isMonthOpen}
-          selectedValue={value.month}
-          options={months}
-          onSelect={handleMonthChange}
-          placeholder="월"
-          suffix="월"
-          dropdownType="month"
-        />
-      </div>
+        <div className="flex-1">
+          <DropdownSelect
+            isOpen={isMonthOpen}
+            selectedValue={value.month}
+            options={months}
+            onSelect={handleMonthChange}
+            placeholder="월"
+            suffix="월"
+            dropdownType="month"
+          />
+        </div>
 
-      <div className="flex-1">
-        <DropdownSelect
-          isOpen={isDayOpen}
-          selectedValue={value.day}
-          options={days}
-          onSelect={handleDayChange}
-          placeholder="일"
-          suffix="일"
-          dropdownType="day"
-        />
+        <div className="flex-1">
+          <DropdownSelect
+            isOpen={isDayOpen}
+            selectedValue={value.day}
+            options={days}
+            onSelect={handleDayChange}
+            placeholder="일"
+            suffix="일"
+            dropdownType="day"
+          />
+        </div>
       </div>
+      {hasError && errorMessage && <p className="text-error text-sm mt-1 ml-1">{errorMessage}</p>}
     </div>
   )
 }
