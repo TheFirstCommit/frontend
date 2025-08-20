@@ -121,10 +121,18 @@ const CreateGroup:React.FC = () => {
         }
     }
 
-    return (
-        <div className='bg-background min-h-dvh flex flex-col px-6 items-center'>
+    const openAddress = () => {
+        new window.daum.Postcode({
+            oncomplete: function (data: any) {
+                setElder({ ...elder, addressNumber: data.zonecode, address: data.address })
+            },
+        }).open();
+    };
 
-            <form className='flex flex-col w-full gap-6 mt-10 mb-9'>
+    return (
+        <div className='bg-background min-h-[calc(100vh-56px)] flex flex-col px-6 items-center'>
+
+            <div className='flex flex-col w-full gap-6 mt-10 mb-9'>
 
                 <div className='flex flex-col gap-3'>
                     <p>가족 그룹 이름을 정해주세요.</p>
@@ -184,7 +192,7 @@ const CreateGroup:React.FC = () => {
                                 hasError={!!errorMessage.elderAddressNumber}
                                 errorMessage={errorMessage.elderAddressNumber || ''}
                             />
-                            <Button className='w-[50%]' text='우편번호 찾기' variant='secondary' onClick={() => {}} />
+                            <Button className='w-[50%]' text='우편번호 찾기' variant='secondary' onClick={openAddress} />
                         </div>
                         <TextField
                             value={elder.address}
@@ -214,7 +222,7 @@ const CreateGroup:React.FC = () => {
                     />
                 </div>
 
-            </form>
+            </div>
 
             <CTA className='h-16 mt-auto mb-9' text='다음' variant='main' onClick={handleNext} />
         </div>
