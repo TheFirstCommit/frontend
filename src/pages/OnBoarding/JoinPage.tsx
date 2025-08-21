@@ -15,7 +15,7 @@ const JoinPage:React.FC = () => {
     const [relationError, setRelationError] = useState<string>('')
 
     const handleCodeValidation = async () => {
-        if (code.length !== 8) return
+        if (code.length !== 6) return
 
         setIsLoading(true)
         setErrorMessage('')
