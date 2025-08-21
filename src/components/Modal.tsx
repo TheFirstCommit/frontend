@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className = ""
       <div className="absolute inset-0 bg-black opacity-40" onClick={handleBackdropClick} />
 
       {/* 모달 컨텐츠 */}
-      <div className={`relative bg-white rounded-xl shadow-lg max-w-md w-1/3 min-w-80 min-h-1/4 ${className}`}>
+      <div className={`relative bg-white rounded-xl shadow-lg max-w-md w-1/3 min-w-80 ${className}`}>
         {children}
       </div>
     </div>
