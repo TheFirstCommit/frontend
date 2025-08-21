@@ -2,8 +2,11 @@ import { CTA } from "@/components/Buttons"
 import { TextField_WithButton } from "@/components/TextField_WithButton"
 import { Dropdown_Relation } from "@/components/Dropdown_Relation"
 import { useState } from "react"
+import { apiClient } from "@/shared/api/client"
+import { useNavigate } from "react-router-dom"
 
 const JoinPage:React.FC = () => {
+    const navigate = useNavigate()
     const [code, setCode] = useState<string>('')
     const [relation, setRelation] = useState<string>('')
     const [isCodeValidated, setIsCodeValidated] = useState<boolean>(false)
@@ -12,36 +15,23 @@ const JoinPage:React.FC = () => {
     const [relationError, setRelationError] = useState<string>('')
 
     const handleCodeValidation = async () => {
-        if (code.length !== 8) return
+        if (code.length !== 6) return
 
         setIsLoading(true)
         setErrorMessage('')
 
-        try {
-            // API 호출 (실제 구현 시 실제 API 엔드포인트로 변경)
-            const response = await fetch('/api/validate-invite-code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ code }),
-            })
-
-            if (response.ok) {
-                setIsCodeValidated(true)
-                setErrorMessage('')
-            } else {
-                const errorData = await response.json()
-                setErrorMessage(errorData.message || '초대코드를 다시 확인해 주세요.')
-            }
-        } catch (error) {
-            // API 호출 실패 시 임시로 성공 처리 (개발용)
-            console.log('API 호출 실패, 임시로 성공 처리:', error)
+        apiClient.put('/social/family/invite', {
+            familyCode: code
+        }).then(res => {
+            console.log(res)
             setIsCodeValidated(true)
             setErrorMessage('')
-        } finally {
+        }).catch(err => {
+            console.log(err)
+            setErrorMessage('초대코드를 다시 확인해 주세요.')
+        }).finally(() => {
             setIsLoading(false)
-        }
+        })
     }
 
     const handleRelationChange = (value: string) => {
@@ -65,8 +55,15 @@ const JoinPage:React.FC = () => {
         }
 
         // 여기서 그룹 가입 처리
-        console.log('그룹 가입 완료:', { code, relation })
-        // navigate('/family-group/join/complete')
+        apiClient.post('/social/family/invite',{
+            familyCode: code,
+            relation: relation
+        }).then(() => {
+            navigate('/home')
+        }).catch(err => {
+            console.log(err)
+            setErrorMessage('그룹 가입 실패')
+        })
     }
 
     return (
