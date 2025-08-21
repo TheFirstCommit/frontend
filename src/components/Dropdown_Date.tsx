@@ -48,14 +48,6 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
   // 현재 선택된 날짜 객체
   const currentDate = parseDateString(value)
 
-  console.log('Dropdown_Date Debug:', {
-    value,
-    currentDate,
-    year: currentDate.year,
-    month: currentDate.month,
-    day: currentDate.day,
-  })
-
   // 연도 범위 (1900년부터 현재 연도까지)
   const currentYear = new Date().getFullYear()
   const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i)
@@ -75,7 +67,6 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
   const days = Array.from({ length: getDaysInMonth(effectiveYear, effectiveMonth) }, (_, i) => i + 1)
 
   const handleYearChange = (year: number) => {
-    console.log('handleYearChange called with:', year)
     const newDate = { ...currentDate, year }
     // 연도가 변경되면 일이 유효하지 않을 수 있으므로 조정
     const maxDays = getDaysInMonth(year, newDate.month)
@@ -85,7 +76,6 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
 
     // yyyy-mm-dd 형식으로 변환
     const formattedDate = formatDateToString(newDate)
-    console.log('formattedDate:', formattedDate)
     onChange(formattedDate)
     setIsYearOpen(false)
   }
@@ -101,7 +91,6 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
 
     // yyyy-mm-dd 형식으로 변환
     const formattedDate = formatDateToString(newDate)
-    console.log('formattedDate:', formattedDate)
     onChange(formattedDate)
     setIsMonthOpen(false)
   }
@@ -112,7 +101,6 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
 
     // yyyy-mm-dd 형식으로 변환
     const formattedDate = formatDateToString(newDate)
-    console.log('formattedDate:', formattedDate)
     onChange(formattedDate)
     setIsDayOpen(false)
   }

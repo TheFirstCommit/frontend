@@ -4,16 +4,59 @@ import { CTA } from "@/components/Buttons"
 import Modal from "@/components/Modal"
 import { MyPage_List } from "@/components/MyPage_List"
 import { Subscription_Info } from "@/components/Subscription_Info"
-import { useState } from "react"
+import { apiClient } from "@/shared/api/client"
+import { useLeaderStore } from "@/stores/Leader.store"
+import { useMyInfoStore } from "@/stores/myInfo.store"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const MyPage: React.FC = () => {
     const navigate = useNavigate()
-    const [socialProvider, setSocialProvider] = useState('google')
-    const [username, setUsername] = useState('테스트')
-    const [isLeader, setIsLeader] = useState(true)
-    const [hasCard, setHasCard] = useState(false)
     const [logoutModal, setLogoutModal] = useState(false)
+    const {isLeader, setIsLeader} = useLeaderStore()
+    const {InfoData, setInfoData, setImgUrl} = useMyInfoStore()
+    const [paymentData, setPaymentData] = useState({
+        hasCard: false,
+        price: 6900,
+        paymentDay: '',
+        nextPaymentDay: '',
+        sincePaymentDay: '',
+        leaderName: '',
+    })
+
+    useEffect(() => {
+        apiClient.get('/api/user').then(res => {
+            setIsLeader(res.data.data.userInfoDto.isLeader)
+            setInfoData({
+                name: res.data.data.userInfoDto.name,
+                birthday: res.data.data.userInfoDto.birthday,
+                phone: res.data.data.userInfoDto.phone,
+                relation: res.data.data.userInfoDto.relation,
+                provider: res.data.data.userInfoDto.socialProvider,
+            })
+            if(res.data.data.userInfoDto.img.cid) {
+                setImgUrl(res.data.data.userInfoDto.img.cid)
+            }
+            setPaymentData({
+                hasCard: res.data.data.hasCard,
+                price: res.data.data.paymentDto.price ?? '',
+                paymentDay: '',
+                nextPaymentDay: '',
+                sincePaymentDay: '',
+                leaderName: '',
+            })
+            if(res.data.data.hasCard) {
+                setPaymentData(prev => ({
+                    ...prev,
+                    paymentDay: res.data.data.paymentDto.paymentDay,
+                    nextPaymentDay: res.data.data.paymentDto.nextPaymentDay,
+                    sincePaymentDay: res.data.data.paymentDto.sincePaymentDay,
+                    leaderName: res.data.data.paymentDto.leader.name,
+                }))
+            }
+            console.log(res)
+        })
+    }, [])
 
     const handleEdit = () => {
         navigate('/mypage/info')
@@ -31,17 +74,26 @@ const MyPage: React.FC = () => {
         navigate('/mypage/leave')
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('family-store')
+        localStorage.removeItem('signup-info-store')
+        localStorage.removeItem('signup-store')
+        navigate('/')
+    }
+
     return (
         <div className='bg-background min-h-[calc(100vh-56px)] flex flex-col'>
 
             <div className='flex flex-col gap-4 px-4 mt-6'>
-                <Badge_Provider provider={socialProvider} />
+                <Badge_Provider provider={InfoData.provider} />
                 <div className='flex gap-2 items-center'>
-                    <p className='font-extrabold text-2xl'>{username} 님</p>
+                    <p className='font-extrabold text-2xl'>{InfoData.name} 님</p>
                     {isLeader && <Badge_Leader />}
                 </div>
                 <div>
-                    <Subscription_Info subscription={hasCard} price={6900} paymentDay='매월 넷째 주 일요일' nextPaymentDay='2025-09-21' sincePaymentDay='2025-08-21' leaderName='테스트' />
+                    <Subscription_Info subscription={paymentData.hasCard} price={paymentData.price} paymentDay={paymentData.paymentDay} nextPaymentDay={paymentData.nextPaymentDay} sincePaymentDay={paymentData.sincePaymentDay} leaderName={paymentData.leaderName} />
                 </div>
             </div>
 
@@ -62,7 +114,7 @@ const MyPage: React.FC = () => {
                 <p className='text-[16px] font-semibold text-gray-900'>로그아웃 하시겠어요?</p>
                 <div className='flex gap-1 mb-4 w-[80%]'>
                     <button className='w-full text-[16px] font-bold text-gray-700' onClick={() => setLogoutModal(false)}>취소</button>
-                    <CTA text='로그아웃' variant='main' onClick={()=>{}}/>
+                    <CTA text='로그아웃' variant='main' onClick={handleLogout}/>
                 </div>
             </div>
         </Modal>
