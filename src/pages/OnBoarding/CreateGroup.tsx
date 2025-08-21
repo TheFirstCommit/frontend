@@ -76,6 +76,14 @@ const CreateGroup: React.FC = () => {
       setErrorMessage('relation', null)
     }
 
+    // 어르신 이미지 검증
+    if (!elderImg) {
+      setErrorMessage('elderImg', '받는분의 프로필 사진을 선택해주세요.')
+      hasError = true
+    } else {
+      setErrorMessage('elderImg', null)
+    }
+
     if (!hasError) {
       const formData = new FormData()
       formData.append('familyName', familyName)
@@ -140,12 +148,13 @@ const CreateGroup: React.FC = () => {
     const file = event.target.files?.[0]
     if (file) {
       setElderImg(file)
+      setErrorMessage('elderImg', null) // 이미지 선택 시 에러 해제
     }
   }
 
   const openAddress = () => {
     new window.daum.Postcode({
-      oncomplete: function (data: any) {
+      oncomplete: function (data: { zonecode: string; address: string }) {
         setElder({ ...elder, addressNumber: data.zonecode, address: data.address })
       },
     }).open()
@@ -188,6 +197,7 @@ const CreateGroup: React.FC = () => {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
             </div>
+            {errorMessage.elderImg && <p className="text-error text-sm">{errorMessage.elderImg}</p>}
           </div>
         </div>
 

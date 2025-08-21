@@ -22,6 +22,7 @@ interface FamilyGroupStore {
     elderAddressDetail: string | null
     elderAddressNumber: string | null
     relation: string | null
+    elderImg: string | null
   }
   setFamilyName: (familyName: string) => void
   setPaymentDay: (paymentDay: string) => void
@@ -62,6 +63,7 @@ export const useFamilyGroupStore = create<FamilyGroupStore>()(
         elderAddressDetail: null,
         elderAddressNumber: null,
         relation: null,
+        elderImg: null,
       },
       setFamilyName: (familyName: string) => set({ familyName }),
       setPaymentDay: (paymentDay: string) => set({ paymentDay }),
@@ -102,6 +104,7 @@ export const useFamilyGroupStore = create<FamilyGroupStore>()(
             elderAddressDetail: null,
             elderAddressNumber: null,
             relation: null,
+            elderImg: null,
           },
         })
       },
