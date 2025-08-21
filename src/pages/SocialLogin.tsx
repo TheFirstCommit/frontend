@@ -20,9 +20,13 @@ const SocialLogin: React.FC = () => {
       })
       .then(res => {
         console.log('Social login response:', res)
-        localStorage.setItem('accessToken', res.data.accessToken)
-        localStorage.setItem('refreshToken', res.data.refreshToken)
-        // window.location.href = '/'
+        localStorage.setItem('accessToken', res.data.data.accessToken)
+        localStorage.setItem('refreshToken', res.data.data.refreshToken)
+        if (res.data.data.user) {
+            window.location.href = '/signup'
+        } else {
+            window.location.href = '/home'
+        }
       })
       .catch(error => {
         console.error('Social login error:', error)
