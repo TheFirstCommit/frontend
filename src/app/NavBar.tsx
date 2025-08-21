@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import Icon_Home_Off from '@/assets/Icons/Property 1=home, Property 2=off.svg'
 import Icon_Home_On from '@/assets/Icons/Property 1=home, Property 2=on.svg'
 import Icon_Family_Off from '@/assets/Icons/Property 1=family, Property 2=off.svg'
@@ -8,6 +8,17 @@ import Icon_Postbox_On from '@/assets/Icons/Property 1=postbox, Property 2=on.sv
 import Icon_Mypage_Off from '@/assets/Icons/Property 1=mypage, Property 2=off.svg'
 import Icon_Mypage_On from '@/assets/Icons/Property 1=mypage, Property 2=on.svg'
 import Icon_Posting from '@/assets/Icons/nav_posting.svg'
+
+/*const HIDE_TAB_ROUTES = ["/layouts", "/layouts/*"]; //하단 nav바 숨기는 페이지
+function matchPath(pathname: string, patterns: string[]) {
+  return patterns.some((p) => {
+    if (p.endsWith("/*")) {
+      const base = p.slice(0, -1); // "/*" 제거
+      return pathname.startsWith(base);
+    }
+    return pathname === p;
+  });
+}*/
 
 export const NavBar: React.FC = () => {
   const navigate = useNavigate()
@@ -24,6 +35,8 @@ export const NavBar: React.FC = () => {
   const handlePostingClick = () => {
     navigate('/posting') // 포스팅 페이지로 이동
   }
+
+  /*const hideTab = matchPath(location.pathname, HIDE_TAB_ROUTES)*/
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">

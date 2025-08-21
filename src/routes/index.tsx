@@ -19,6 +19,8 @@ import ElderInfo_EditPage from '@/pages/Family/ElderInfo_EditPage'
 import DaumApiTest from '@/components/DaumApiTest'
 import PdfTestPage from "@/pages/PdfTestPage";
 import RemotePdfPage from '@/pages/RemotePdfPage';
+import LayoutsPage from "@/pages/FeedPages/LayoutsPage";
+import ComposePhotosPage from "@/pages/FeedPages/ComposePhotosPage"
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +103,12 @@ export const router = createBrowserRouter([
       {
         path: "/pdfviewer", element: <RemotePdfPage />
       },
+      {
+        path: "/layouts", element: <LayoutsPage />
+      },
+      {
+        path: "compose", element: <ComposePhotosPage />
+      }
     ],
   },
   {
