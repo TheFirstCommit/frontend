@@ -2,6 +2,7 @@ import { SocialButton } from '@/components/Buttons'
 import Icon_Kakao from '@/assets/icons/icon_Kakao.svg'
 import Icon_Google from '@/assets/icons/icon_Google.svg'
 import Icon_Naver from '@/assets/icons/icon_Naver.svg'
+import logo from '@/assets/images/logo.png'
 
 const LoginPage: React.FC = () => {
   const handleSocialLogin = async (provider: string) => {
@@ -11,8 +12,8 @@ const LoginPage: React.FC = () => {
   return (
     <div className="flex gap-10 bg-background min-h-dvh">
       <div className="flex flex-col justify-center w-full px-5">
-        <div className="flex justify-center mt-auto mb-auto">
-          <div className="w-[180px] h-[90px] bg-gray-200">로고자리</div>
+        <div className="flex justify-center mt-auto">
+          <img src={logo} alt='logo' className='w-[180px]' />
         </div>
 
         {/* 소셜 로그인 버튼 */}
