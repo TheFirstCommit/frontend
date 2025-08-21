@@ -6,6 +6,7 @@ import { Button, CTA } from '@/components/Buttons'
 import { useNavigate } from 'react-router-dom'
 import { useFamilyStore } from '@/stores/family.store'
 import { apiClient } from '@/shared/api/client'
+import { PhoneField } from '@/components/PhoneField'
 
 const ElderInfo_EditPage: React.FC = () => {
   const navigate = useNavigate()
@@ -128,7 +129,7 @@ const ElderInfo_EditPage: React.FC = () => {
 
       <div className="flex flex-col gap-4">
         <p className="text-[16px] font-normal">전화번호</p>
-        <TextField value={phone} onChange={setPhone} placeholder="전화번호를 입력해주세요." />
+        <PhoneField value={phone} onChange={setPhone} />
       </div>
 
       <div className="flex flex-col gap-3">
