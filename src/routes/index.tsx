@@ -26,6 +26,7 @@ import MyInfoPage from '@/pages/MyPage/MyInfoPage'
 import MyInfo_EditPage from '@/pages/MyPage/MyInfo_EditPage'
 import Group_Payment from '@/pages/MyPage/Group_Payment'
 import LeavePage from '@/pages/MyPage/LeavePage'
+import HomePage from '@/pages/HomePage'
 
 export const router = createBrowserRouter([
   {
@@ -129,7 +130,11 @@ export const router = createBrowserRouter([
       {
         path: 'mypage/leave',
         element: <LeavePage />,
-      }
+      },
+      {
+        path: 'home',
+        element: <HomePage />
+      },
     ],
   },
   {
