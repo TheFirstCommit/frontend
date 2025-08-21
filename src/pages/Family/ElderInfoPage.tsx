@@ -1,20 +1,14 @@
 import edit_active from '@/assets/Icons/edit_Property 1=text.svg'
 import profileImage from '@/assets/images/profile.png'
-import { TextField } from '@/components/TextField'
-import { useState } from 'react'
-import { Button } from '@/components/Buttons'
 import { useNavigate } from 'react-router-dom'
 import { TextField_Elder } from '@/components/TextField_Elder'
+import { useLeaderStore } from '@/stores/Leader.store'
+import { useFamilyStore } from '@/stores/family.store'
 
 const ElderInfoPage: React.FC = () => {
     const navigate = useNavigate()
-    const [name, setName] = useState('테스트')
-    const [birthday, setBirthday] = useState('1952년 07월 06일')
-    const [phone, setPhone] = useState('010-1234-5678')
-    const [addressNumber, setAddressNumber] = useState('08528')
-    const [address, setAddress] = useState('서울특별시 금천구 가산동')
-    const [addressDetail, setAddressDetail] = useState('101동 101호')
-    const [isLeader, setIsLeader] = useState(true)
+    const { isLeader } = useLeaderStore()
+    const { elder } = useFamilyStore()
 
     const handleEdit = () => {
         navigate('/my-family/elder-info/edit')
@@ -28,22 +22,22 @@ const ElderInfoPage: React.FC = () => {
                     <p className='text-[16px]'><span className='font-semibold'>소식지를 전달받을 분</span>이에요.</p>
                     {isLeader ? <img src={edit_active} alt="edit" onClick={handleEdit} /> : <div className='' />}
                 </div>
-                <img src={profileImage} alt="profile" className='w-[84px] h-[84px] mx-auto' />
+                <img src={elder.imgUrl ? `https://api.deardream.r-e.kr/ipfs/${elder.imgUrl}` : profileImage} alt="profile" className='w-[84px] h-[84px] mx-auto bg-gray-400 rounded-full' />
             </div>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-[16px] font-normal'>이름</p>
-                <TextField_Elder value={name} />
+                <TextField_Elder value={elder.name} />
             </div>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-[16px] font-normal'>생년월일</p>
-                <TextField_Elder value={birthday} />
+                <TextField_Elder value={elder.birth} />
             </div>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-[16px] font-normal'>전화번호</p>
-                <TextField_Elder value={phone} />
+                <TextField_Elder value={elder.number} />
             </div>
 
             <div className='flex flex-col gap-3'>
@@ -51,15 +45,15 @@ const ElderInfoPage: React.FC = () => {
                     <div className='flex flex-col gap-3'>
                         <div className='flex gap-2'>
                             <TextField_Elder
-                                value={addressNumber}
+                                value={elder.addressNumber}
                             />
                             <div className='w-[50%]'/>
                         </div>
                         <TextField_Elder
-                            value={address}
+                            value={elder.address}
                         />
                         <TextField_Elder
-                            value={addressDetail}
+                            value={elder.addressDetail}
                         />
                     </div>
                 </div>
