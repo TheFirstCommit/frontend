@@ -114,7 +114,7 @@ export const router = createBrowserRouter([
       {
         path: "compose", element: <ComposePhotosPage />
       },
-      }
+      {
         path: 'mypage',
         element: <MyPage />,
       },
