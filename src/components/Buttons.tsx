@@ -41,3 +41,10 @@ export const SocialButton:React.FC<SocialButtonProps> = ({text, className, onCli
         </button>
     )
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const Button_Sub:React.FC<ButtonProps> = ({text, className, disabled, preseed, onClick}) => {
+    return (
+        <button className={`py-[4.5px] px-[8px] rounded-sm font-semibold text-[16px] ${className} ${disabled ? 'opacity-40' : 'hover:cursor-pointer'} ${preseed ? 'bg-primary-100 text-gray-100' : 'text-primary-900'} border border-primary`} onClick={onClick}>{text}</button>
+    )
+}

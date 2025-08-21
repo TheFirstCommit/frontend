@@ -4,6 +4,7 @@ import { Radio_Button } from "@/components/RadioButton"
 import { TextField } from "@/components/TextField"
 import { TextField_WithButton } from "@/components/TextField_WithButton"
 import { Dropdown_Date } from "@/components/Dropdown_Date"
+import { Dropdown_Dynamic } from '@/components/Dropdown_Dynamic'
 import { Checkbox } from '@/components/Checkbox'
 import { useState } from 'react'
 
@@ -11,11 +12,9 @@ export const ComponentTestPage: React.FC = () => {
   const [text, setText] = useState('')
   const [hasError, setHasError] = useState(false)
   const [isValid, setIsValid] = useState(false)
-  const [selectedDate, setSelectedDate] = useState({
-    year: 0,
-    month: 0,
-    day: 0,
-  })
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedRegion, setSelectedRegion] = useState('')
   const [checkbox1, setCheckbox1] = useState(false)
   const [checkbox2, setCheckbox2] = useState(true)
 
@@ -29,64 +28,71 @@ export const ComponentTestPage: React.FC = () => {
     }
   }
 
-  const handleDateChange = (date: { year: number; month: number; day: number }, formattedDate: string) => {
-    setSelectedDate(date)
-    console.log('Selected date object:', date)
+  const handleDateChange = (formattedDate: string) => {
+    setSelectedDate(formattedDate)
     console.log('Formatted date string for backend:', formattedDate)
   }
 
+  // 정적 옵션 예시 (페이지에서 API 통신 후 정리된 데이터)
+  const categoryOptions = [
+    { id: 1, name: '음식점' },
+    { id: 2, name: '카페' },
+    { id: 3, name: '영화관' },
+    { id: 4, name: '쇼핑몰' },
+    { id: 5, name: '병원' },
+  ]
+
+  const regionOptions = [
+    { id: 1, name: '서울' },
+    { id: 2, name: '부산' },
+    { id: 3, name: '대구' },
+    { id: 4, name: '인천' },
+    { id: 5, name: '광주' },
+    { id: 6, name: '대전' },
+    { id: 7, name: '울산' },
+  ]
+
   return (
-    <div className="bg-white text-gray-900 items-center justify-center p-6 gap-10 grid grid-cols-3">
-      <div className="flex flex-row gap-4 w-full">
-        <CTA text="기본" variant="main" />
-        <CTA text="비활성화" variant="main" disabled />
-      </div>
-      <div className="flex flex-row gap-4 w-full">
-        <CTA text="기본" variant="sub" />
-        <CTA text="비활성화" variant="sub" disabled />
-      </div>
-      <div className="flex flex-row gap-4 w-full">
-        <Button text="Button1" variant="primary" />
-        <Button text="Button1" variant="primary" disabled />
-        <Button text="Button2" variant="secondary" />
-        <Button text="Button2" variant="secondary" disabled />
-      </div>
-      <div className="flex flex-row w-full">
-        <fieldset className="flex flex-col gap-4">
-          <Radio_Button value={1} text="Radio1" name="radio" />
-          <Radio_Button value={2} text="Radio2" name="radio" />
-        </fieldset>
-      </div>
-      <div className="flex flex-row w-full">
-        <Group_Button text="가족 그룹 만들기" />
-      </div>
-      <div className="flex flex-col w-full">
-        <TextField
-          value={text}
-          onChange={setText}
-          name="text"
-          hasError={hasError}
-          isValid={isValid}
-          errorMessage="에러 메시지"
-          onBlur={() => testError(text)}
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold mb-6">컴포넌트 테스트 페이지</h1>
+
+      {/* 날짜 선택 */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">날짜 선택</label>
+        <Dropdown_Date
+          value={selectedDate}
+          onChange={handleDateChange}
+          defaultYear={1990}
+          defaultMonth={1}
+          defaultDay={1}
         />
-        <TextField_WithButton
-          value={text}
-          onChange={setText}
-          name="text"
-          hasError={hasError}
-          isValid={isValid}
-          errorMessage="에러 메시지"
-          onBlur={() => testError(text)}
+        <p className="text-sm text-gray-500">선택된 날짜: {selectedDate}</p>
+      </div>
+
+      {/* 카테고리 선택 (직접 입력 가능) */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">카테고리 선택</label>
+        <Dropdown_Dynamic
+          value={selectedCategory}
+          onChange={setSelectedCategory}
+          options={categoryOptions}
+          placeholder="카테고리를 선택하세요"
+          allowCustomInput={true}
+          customInputPlaceholder="카테고리를 직접 입력하세요"
         />
+        <p className="text-sm text-gray-500">선택된 카테고리: {selectedCategory}</p>
       </div>
-      <div className="flex flex-col w-full">
-        <Dropdown_Date value={selectedDate} onChange={handleDateChange} />
-      </div>
-      <div className="flex flex-col w-full gap-4">
-        <Checkbox checked={checkbox1} onChange={setCheckbox1} text="이용약관에 동의합니다" />
-        <Checkbox checked={checkbox2} onChange={setCheckbox2} text="개인정보 처리방침에 동의합니다" />
-        <Checkbox checked={false} onChange={() => {}} text="비활성화된 체크박스" disabled />
+
+      {/* 지역 선택 */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">지역 선택</label>
+        <Dropdown_Dynamic
+          value={selectedRegion}
+          onChange={setSelectedRegion}
+          options={regionOptions}
+          placeholder="지역을 선택하세요"
+        />
+        <p className="text-sm text-gray-500">선택된 지역: {selectedRegion}</p>
       </div>
     </div>
   )

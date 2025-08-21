@@ -5,11 +5,14 @@ import { useState, useEffect } from "react"
 import Modal from "@/components/Modal"
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk'
 import { generateCustomerKey } from '@/shared/utils/generateCustomerKey'
+import { useFamilyGroupStore } from "@/stores/familyGroup.store"
+import { apiClient } from "@/shared/api/client"
+import profile from '@/assets/images/profile.png'
 
 const PaymentRegister:React.FC = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
-    const [selectedDate, setSelectedDate] = useState<number>(0)
+    const {setPaymentDay, paymentDay, familyName, elder, relation, elderImg} = useFamilyGroupStore()
     const [cardAvailable, setCardAvailable] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [customerKey] = useState(() => generateCustomerKey())
@@ -58,17 +61,33 @@ const PaymentRegister:React.FC = () => {
         const dayOfMonth = today.getDate()
 
         if (dayOfMonth >= 1 && dayOfMonth <= 15) {
-            setSelectedDate(1)
+            setPaymentDay('SECOND_SUNDAY')
         } else {
-            setSelectedDate(0)
+            setPaymentDay('FOURTH_SUNDAY')
         }
     }, [])
 
-    const handleDateChange = (value: number | string) => {
-        setSelectedDate(Number(value))
+    const handleDateChange = (value:string | number) => {
+        setPaymentDay(value as string)
     }
 
     const handleStart = () => {
+      const formData = new FormData()
+      formData.append('familyName', familyName)
+      formData.append('paymentDay', paymentDay)
+      formData.append('relation', relation)
+      // elder JSON -> Blob으로 감싸기
+      formData.append(
+        'elder',
+        new Blob([JSON.stringify(elder)], { type: "application/json" })
+      )
+      formData.append('elderImg', elderImg as File)
+
+      apiClient.post('/social/family', formData).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
         navigate('/home')
     }
 
@@ -83,17 +102,17 @@ const PaymentRegister:React.FC = () => {
           <p className="text-base">오늘을 기준으로 가족 소식 발행일을 추천해드렸어요!</p>
           <Radio_Button
             className="text-sm"
-            value={0}
+            value='SECOND_SUNDAY'
             text="매월 둘째 주 일요일"
             onChange={handleDateChange}
-            checked={selectedDate === 0}
+            checked={paymentDay === 'SECOND_SUNDAY'}
           />
           <Radio_Button
             className="text-sm"
-            value={1}
+            value='FOURTH_SUNDAY'
             text="매월 넷째 주 일요일"
             onChange={handleDateChange}
-            checked={selectedDate === 1}
+            checked={paymentDay === 'FOURTH_SUNDAY'}
           />
         </div>
 
@@ -118,7 +137,7 @@ const PaymentRegister:React.FC = () => {
           <CTA className="mt-auto mb-9" text="나중에 등록" variant="sub" onClick={() => setIsModalOpen(true)} />
         )}
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <div className="flex flex-col gap-3 px-6 pt-7 items-center">
+          <div className="flex flex-col gap-3 px-6 pt-7 items-center mb-6">
             <p className="font-semibold text-[16px]">발행일 전까지 카드를 등록해주세요.</p>
             <p className="font-semibold text-sm">카드를 등록해야 소식지를 받는 분께 전할 수 있어요.</p>
             <CTA className="mt-auto" text="확인" variant="main" onClick={handleStart} />

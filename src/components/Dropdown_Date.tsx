@@ -1,14 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 
-interface DateValue {
-  year: number
-  month: number
-  day: number
-}
-
 interface Dropdown_DateProps {
-  value: DateValue
-  onChange: (date: DateValue, formattedDate: string) => void
+  value: string // "yyyy-mm-dd" 형식의 문자열
+  onChange: (formattedDate: string) => void // "yyyy-mm-dd" 형식의 문자열 반환
   className?: string
   disabled?: boolean
   hasError?: boolean
@@ -19,7 +13,7 @@ interface Dropdown_DateProps {
 }
 
 export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
-  value,
+  value = '',
   onChange,
   className,
   disabled,
@@ -33,6 +27,35 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
   const [isMonthOpen, setIsMonthOpen] = useState(false)
   const [isDayOpen, setIsDayOpen] = useState(false)
 
+  // 문자열을 파싱하여 year, month, day 추출
+  const parseDateString = (dateString: string): { year: number; month: number; day: number } => {
+    if (!dateString || typeof dateString !== 'string' || dateString === '') {
+      return { year: 0, month: 0, day: 0 }
+    }
+
+    const parts = dateString.split('-')
+    if (parts.length === 3) {
+      const year = parts[0] ? parseInt(parts[0], 10) : 0
+      const month = parts[1] ? parseInt(parts[1], 10) : 0
+      const day = parts[2] ? parseInt(parts[2], 10) : 0
+
+      return { year, month, day }
+    }
+
+    return { year: 0, month: 0, day: 0 }
+  }
+
+  // 현재 선택된 날짜 객체
+  const currentDate = parseDateString(value)
+
+  console.log('Dropdown_Date Debug:', {
+    value,
+    currentDate,
+    year: currentDate.year,
+    month: currentDate.month,
+    day: currentDate.day,
+  })
+
   // 연도 범위 (1900년부터 현재 연도까지)
   const currentYear = new Date().getFullYear()
   const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i)
@@ -44,10 +67,16 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month, 0).getDate()
   }
-  const days = Array.from({ length: getDaysInMonth(value.year, value.month) }, (_, i) => i + 1)
+
+  // 현재 선택된 연도와 월이 유효하지 않으면 기본값 사용
+  const effectiveYear = currentDate.year > 0 ? currentDate.year : defaultYear
+  const effectiveMonth = currentDate.month > 0 ? currentDate.month : defaultMonth
+
+  const days = Array.from({ length: getDaysInMonth(effectiveYear, effectiveMonth) }, (_, i) => i + 1)
 
   const handleYearChange = (year: number) => {
-    const newDate = { ...value, year }
+    console.log('handleYearChange called with:', year)
+    const newDate = { ...currentDate, year }
     // 연도가 변경되면 일이 유효하지 않을 수 있으므로 조정
     const maxDays = getDaysInMonth(year, newDate.month)
     if (newDate.day > maxDays) {
@@ -56,12 +85,14 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
 
     // yyyy-mm-dd 형식으로 변환
     const formattedDate = formatDateToString(newDate)
-    onChange(newDate, formattedDate)
+    console.log('formattedDate:', formattedDate)
+    onChange(formattedDate)
     setIsYearOpen(false)
   }
 
   const handleMonthChange = (month: number) => {
-    const newDate = { ...value, month }
+    console.log('handleMonthChange called with:', month)
+    const newDate = { ...currentDate, month }
     // 월이 변경되면 일이 유효하지 않을 수 있으므로 조정
     const maxDays = getDaysInMonth(newDate.year, month)
     if (newDate.day > maxDays) {
@@ -70,16 +101,19 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
 
     // yyyy-mm-dd 형식으로 변환
     const formattedDate = formatDateToString(newDate)
-    onChange(newDate, formattedDate)
+    console.log('formattedDate:', formattedDate)
+    onChange(formattedDate)
     setIsMonthOpen(false)
   }
 
   const handleDayChange = (day: number) => {
-    const newDate = { ...value, day }
+    console.log('handleDayChange called with:', day)
+    const newDate = { ...currentDate, day }
 
     // yyyy-mm-dd 형식으로 변환
     const formattedDate = formatDateToString(newDate)
-    onChange(newDate, formattedDate)
+    console.log('formattedDate:', formattedDate)
+    onChange(formattedDate)
     setIsDayOpen(false)
   }
 
@@ -127,7 +161,7 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
     dropdownType: 'year' | 'month' | 'day'
   }) => {
     const dropdownRef = useRef<HTMLDivElement>(null)
-    const hasValue = selectedValue > 0
+    const hasValue = selectedValue !== 0
     const isActive = isOpen || hasValue
 
     useEffect(() => {
@@ -201,16 +235,31 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
   }
 
   // 날짜를 yyyy-mm-dd 형식으로 변환하는 함수
-  const formatDateToString = (date: DateValue): string => {
-    if (date.year === 0 || date.month === 0 || date.day === 0) {
-      return '' // 완전하지 않은 날짜는 빈 문자열 반환
+  const formatDateToString = (date: { year: number; month: number; day: number }): string => {
+    // 모든 값이 있을 때만 완전한 형식 반환
+    if (date.year > 0 && date.month > 0 && date.day > 0) {
+      const year = date.year.toString()
+      const month = date.month.toString().padStart(2, '0')
+      const day = date.day.toString().padStart(2, '0')
+      return `${year}-${month}-${day}`
     }
 
-    const year = date.year.toString()
-    const month = date.month.toString().padStart(2, '0')
-    const day = date.day.toString().padStart(2, '0')
+    // 부분적으로 선택된 경우에도 임시 문자열 반환 (부모 컴포넌트에서 처리)
+    // 예: "1990--" (연도만 선택), "1990-01-" (연도, 월만 선택)
+    let result = ''
+    if (date.year > 0) {
+      result += date.year.toString()
+    }
+    result += '-'
+    if (date.month > 0) {
+      result += date.month.toString().padStart(2, '0')
+    }
+    result += '-'
+    if (date.day > 0) {
+      result += date.day.toString().padStart(2, '0')
+    }
 
-    return `${year}-${month}-${day}`
+    return result
   }
 
   return (
@@ -219,7 +268,7 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
         <div className="flex-1">
           <DropdownSelect
             isOpen={isYearOpen}
-            selectedValue={value.year}
+            selectedValue={currentDate.year}
             options={years}
             onSelect={handleYearChange}
             placeholder="년"
@@ -231,7 +280,7 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
         <div className="flex-1">
           <DropdownSelect
             isOpen={isMonthOpen}
-            selectedValue={value.month}
+            selectedValue={currentDate.month}
             options={months}
             onSelect={handleMonthChange}
             placeholder="월"
@@ -243,7 +292,7 @@ export const Dropdown_Date: React.FC<Dropdown_DateProps> = ({
         <div className="flex-1">
           <DropdownSelect
             isOpen={isDayOpen}
-            selectedValue={value.day}
+            selectedValue={currentDate.day}
             options={days}
             onSelect={handleDayChange}
             placeholder="일"

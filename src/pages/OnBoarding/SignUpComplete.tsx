@@ -1,11 +1,26 @@
 import { CTA } from "@/components/Buttons"
+import { apiClient } from "@/shared/api/client"
+import { useSignUpInfoStore } from "@/stores/signup.store"
 import { useNavigate } from "react-router-dom"
 
 const SignUpComplete:React.FC = () => {
     const navigate = useNavigate()
+    const { info } = useSignUpInfoStore()
 
     const handleClick = () => {
         navigate('/family-group')
+        const formData = new FormData()
+
+        formData.append('name', info.name ?? '')
+        formData.append('birth', info.birth ?? '')
+        formData.append('number', info.phone ?? '')
+        formData.append('img', info.profile as File)
+
+        apiClient.patch('/public/user', formData).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     return (

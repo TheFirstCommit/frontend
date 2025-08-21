@@ -21,6 +21,11 @@ import PdfTestPage from "@/pages/PdfTestPage";
 import RemotePdfPage from '@/pages/RemotePdfPage';
 import LayoutsPage from "@/pages/FeedPages/LayoutsPage";
 import ComposePhotosPage from "@/pages/FeedPages/ComposePhotosPage"
+import MyPage from '@/pages/MyPage/MyPage'
+import MyInfoPage from '@/pages/MyPage/MyInfoPage'
+import MyInfo_EditPage from '@/pages/MyPage/MyInfo_EditPage'
+import Group_Payment from '@/pages/MyPage/Group_Payment'
+import LeavePage from '@/pages/MyPage/LeavePage'
 
 export const router = createBrowserRouter([
   {
@@ -108,6 +113,26 @@ export const router = createBrowserRouter([
       },
       {
         path: "compose", element: <ComposePhotosPage />
+      },
+      }
+        path: 'mypage',
+        element: <MyPage />,
+      },
+      {
+        path: 'mypage/info',
+        element: <MyInfoPage />,
+      },
+      {
+        path: 'mypage/info/edit',
+        element: <MyInfo_EditPage />,
+      },
+      {
+        path: 'mypage/group/payment',
+        element: <Group_Payment />,
+      },
+      {
+        path: 'mypage/leave',
+        element: <LeavePage />,
       }
     ],
   },

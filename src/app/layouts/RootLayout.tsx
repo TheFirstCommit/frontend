@@ -8,7 +8,7 @@ export default function RootLayout() {
   // Header와 Footer를 숨길 경로들
   const hideHeaderPaths = ['/', '/login', '/signup', '/signup/complete', '/billing', '/family-group', '/layouts']
 
-  const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/family-group', '/family-group/create', '/billing', '/posting', '/family-group/create/payment', '/family-group/join', '/my-family/elder-info', '/my-family/elder-info/edit', '/layouts', '/compose']
+  const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/family-group', '/family-group/create', '/billing', '/posting', '/family-group/create/payment', '/family-group/join', '/my-family/elder-info', '/my-family/elder-info/edit', '/layouts', '/compose', '/mypage/info', '/mypage/info/edit', '/mypage/group/payment', '/mypage/leave']
 
   // 현재 경로가 Header를 숨겨야 하는지 확인
   const shouldHideHeader = hideHeaderPaths.includes(location.pathname)
@@ -28,8 +28,13 @@ export default function RootLayout() {
     if (path.includes('/family-group/join')) return ''
     if (path.includes('/family-group')) return '가족 그룹 생성하기'
     if (path.startsWith('/postbox')) return '우편함'
+    if (path.includes('/mypage/group/payment')) return '결제 수단 관리'
+    if (path.includes('/mypage/info/edit')) return '내 정보 수정하기'
+    if (path.includes('/mypage/info')) return '내 정보 관리'
+    if (path.includes('/mypage/leave')) return '탈퇴하기'
     if (path.startsWith('/mypage')) return '마이페이지'
     if (path.startsWith('/posting')) return '포스팅'
+
 
     return ''
   }

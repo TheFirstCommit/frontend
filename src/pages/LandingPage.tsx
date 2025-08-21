@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import logo from '../assets/images/logo.png'
 
 const LandingPage:React.FC = () => {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ const LandingPage:React.FC = () => {
 
     return (
         <div className='flex items-center justify-center my-auto min-h-dvh'>
-            <div className='w-[180px] h-[90px] mb-24 bg-gray-500'>로고</div>
+            <img src={logo} alt='logo' className='w-[180px] mb-24' />
         </div>
     )
 }
