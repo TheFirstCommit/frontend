@@ -4,7 +4,7 @@ import { MainPage } from '@/pages/MainPage'
 import { NotFoundPage } from '@/pages/NotFound'
 import SocialLogin from '@/pages/SocialLogin'
 import LoginPage from '@/pages/OnBoarding/LoginPage'
-import { PaymentCheckoutPage, SuccessPage, FailPage } from '@/shared/api/TossPayments'
+import {SuccessPage, FailPage } from '@/shared/api/TossPayments'
 import { ComponentTestPage } from '@/pages/ComponentTestPage'
 import SignUpPage from '@/pages/OnBoarding/SignUpPage'
 import SignUpComplete from '@/pages/OnBoarding/SignUpComplete'
@@ -72,10 +72,6 @@ export const router = createBrowserRouter([
       {
         path: 'billing',
         children: [
-          {
-            path: 'payment',
-            element: <PaymentCheckoutPage />,
-          },
           {
             path: 'payment/success',
             element: <SuccessPage />,

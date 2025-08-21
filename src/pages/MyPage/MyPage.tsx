@@ -38,17 +38,17 @@ const MyPage: React.FC = () => {
                 setImgUrl(res.data.data.userInfoDto.img.cid)
             }
             setPaymentData({
-                hasCard: res.data.data.hasCard,
+                hasCard: res.data.data.hasPaid,
                 price: res.data.data.paymentDto.price ?? '',
                 paymentDay: '',
                 nextPaymentDay: '',
                 sincePaymentDay: '',
                 leaderName: '',
             })
-            if(res.data.data.hasCard) {
+            if(res.data.data.hasPaid) {
                 setPaymentData(prev => ({
                     ...prev,
-                    paymentDay: res.data.data.paymentDto.paymentDay,
+                    paymentDay: res.data.data.paymentDto.feedEndDay,
                     nextPaymentDay: res.data.data.paymentDto.nextPaymentDay,
                     sincePaymentDay: res.data.data.paymentDto.sincePaymentDay,
                     leaderName: res.data.data.paymentDto.leader.name,

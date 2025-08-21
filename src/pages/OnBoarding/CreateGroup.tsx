@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Dropdown_Relation } from '@/components/Dropdown_Relation'
 import { useFamilyGroupStore } from '@/stores/familyGroup.store'
 import profile from '@/assets/images/profile.png'
+import { apiClient } from '@/shared/api/client'
 
 const CreateGroup: React.FC = () => {
   const {
@@ -76,7 +77,19 @@ const CreateGroup: React.FC = () => {
     }
 
     if (!hasError) {
-      navigate('/family-group/create/payment')
+      const formData = new FormData()
+      formData.append('familyName', familyName)
+      formData.append('elder', new Blob([JSON.stringify(elder)], { type: 'application/json' }))
+      formData.append('elderImg', elderImg as File)
+      apiClient
+        .post('/social/family', formData)
+        .then(res => {
+          console.log(res)
+          navigate('/family-group/create/payment')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 
@@ -164,8 +177,9 @@ const CreateGroup: React.FC = () => {
                   alt="profile"
                 />
               ) : (
-                <img src={profile} className="size-[84px] mx-auto rounded-full bg-gray-200 flex items-center justify-center">
-                </img>
+                <img
+                  src={profile}
+                  className="size-[84px] mx-auto rounded-full bg-gray-200 flex items-center justify-center"></img>
               )}
               <input
                 type="file"

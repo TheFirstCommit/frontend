@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 interface Subscription_InfoProps {
     subscription: boolean
     price?: number
@@ -8,6 +10,17 @@ interface Subscription_InfoProps {
 }
 
 export const Subscription_Info:React.FC<Subscription_InfoProps> = ({ subscription, price, paymentDay, nextPaymentDay, sincePaymentDay, leaderName }) => {
+
+    const [paymentDayString, setPaymentDayString] = useState('')
+
+    useEffect(() => {
+        if(paymentDay == 'SECOND_SUNDAY') {
+            setPaymentDayString('매월 둘째 주 일요일')
+        } else if(paymentDay == 'FOURTH_SUNDAY') {
+            setPaymentDayString('매 넷째 주 일요일')
+        }
+    }, [paymentDay])
+
     return (
         <div className='bg-background2 border border-primary-700 rounded-xl py-3 px-4'>
             <div className='flex justify-between'>
@@ -23,7 +36,7 @@ export const Subscription_Info:React.FC<Subscription_InfoProps> = ({ subscriptio
                 </div>
                 <div className='flex gap-3'>
                     <p className='w-20'>소식 마감일</p>
-                    <p>{paymentDay}</p>
+                    <p>{paymentDayString}</p>
                 </div>
                 <div className='flex gap-3'>
                     <p className='w-20'>다음 결제일</p>

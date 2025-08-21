@@ -1,12 +1,17 @@
 import { Button_Sub, CTA } from "@/components/Buttons"
 import { Dropdown_Dynamic } from "@/components/Dropdown_Dynamic"
 import Modal from "@/components/Modal"
-import { useState } from "react"
+import { apiClient } from "@/shared/api/client"
+import { useEffect, useState } from "react"
 
 const Group_Payment: React.FC = () => {
     const [leaderChange, setLeaderChange] = useState(false)
     const [nextLeader, setNextLeader] = useState('')
     const [unSubCheck, setUnSubCheck] = useState(false)
+    const [cardData, setCardData] = useState({
+        cardCampany: '',
+        cardNumber: '',
+    })
 
     const memberList = [
         {id: 1, name: '테스트트'},
@@ -23,6 +28,15 @@ const Group_Payment: React.FC = () => {
         setUnSubCheck(true)
     }
 
+    useEffect(() => {
+        apiClient.get('/api/payment/card').then(res => {
+            setCardData({
+                cardCampany: res.data.data.cardCompany,
+                cardNumber: res.data.data.cardNumber,
+            })
+        })
+    }, [])
+
     return (
         <div className='min-h-[calc(100vh-56px)] flex flex-col gap-4'>
             <p className='font-semibold text-lg text-gray-900 mt-6 px-6'>카드를 등록하신 날을 기준으로 매월 같은 날짜에 자동 결제가 진행돼요.</p>
@@ -35,8 +49,8 @@ const Group_Payment: React.FC = () => {
                 <div className='flex gap-4 items-center'>
                     <div className='w-[96px] h-[54px] bg-gray-200'>{/*카드 이미지*/}</div>
                     <div>
-                        <p className='text-sm font-semibold text-gray-900'>현대카드</p>
-                        <p className='text-[12px] font-normal text-gray-900'>1234-5678-9012-3456</p>
+                        <p className='text-sm font-semibold text-gray-900'>{cardData.cardCampany}</p>
+                        <p className='text-[12px] font-normal text-gray-900'>{cardData.cardNumber}</p>
                     </div>
                 </div>
                 <Button_Sub text='변경' />
