@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient } from "@/shared/api/client";
+import { useNavigate } from "react-router-dom";
 
 type ImageRef = { cid: string; id: number };
 type HomeDTO = {
@@ -101,6 +102,8 @@ export default function HomePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const ctrl = new AbortController();
         (async () => {
@@ -132,12 +135,31 @@ export default function HomePage() {
                 <h1 className="text-base font-semibold truncate">{familyName}</h1>
                 <div className="w-6 h-6" />
                 </div>
+                <div className="mt-1 flex items-center justify-between">
                 <p className="mt-1 text-xs text-emerald-100">
                 멤버 {memberCount}명
                 {data?.payment?.hasCard === false && (
                     <span className="ml-2 opacity-80">(결제수단 미등록)</span>
                 )}
                 </p>
+                <button
+                    type="button"
+                    onClick={() => navigate("/invite-code")} // ✅ 초대코드 페이지로
+                    className="inline-flex items-center h-7 px-2.5 rounded-full bg-emerald-100
+                                text-emerald-800 text-xs font-medium hover:bg-emerald-200"
+                >
+                <svg
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                ><path d="M10 4v12M4 10h12" />
+                </svg>
+                    초대하기
+                </button>
+                </div>
             </div>
             </div>
         </header>
