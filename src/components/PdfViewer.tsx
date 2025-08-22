@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 
 type Props = {
     file: string | Blob | ArrayBuffer;

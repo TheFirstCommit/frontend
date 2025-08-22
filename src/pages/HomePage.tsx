@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiClient } from "@/shared/api/client";
 
 type ImageRef = { cid: string; id: number };

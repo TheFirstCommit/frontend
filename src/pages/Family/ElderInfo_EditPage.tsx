@@ -40,7 +40,12 @@ const ElderInfo_EditPage: React.FC = () => {
   }
 
   const openAddress = () => {
-    console.log('openAddress')
+    new window.daum.Postcode({
+      oncomplete: function (data: { zonecode: string; address: string }) {
+        setAddressNumber(data.zonecode)
+        setAddress(data.address)
+      },
+    }).open()
   }
 
   const handleSave = () => {

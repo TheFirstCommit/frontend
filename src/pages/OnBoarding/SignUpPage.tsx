@@ -53,6 +53,12 @@ const SignUpPage: React.FC = () => {
     }
   }
 
+  const handleSkip = () => {
+    if(step === 1) {
+      navigate('/')
+    }
+  }
+
   return (
     <div className="bg-background min-h-dvh flex flex-col px-6">
       <ProgressBar step={step} />
@@ -61,7 +67,7 @@ const SignUpPage: React.FC = () => {
       </div>
 
       <div className="flex gap-4 mt-auto mb-9">
-        <CTA className="h-16" text={step === 1 ? '나가기' : '건너뛰기'} variant="sub" onClick={() => {}} />
+        <CTA className="h-16" text={step === 1 ? '나가기' : '건너뛰기'} variant="sub" onClick={handleSkip} />
         <CTA className="h-16" text="다음" variant="main" disabled={false} onClick={handleNext} />
       </div>
     </div>

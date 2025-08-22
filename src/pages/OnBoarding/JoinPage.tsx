@@ -10,27 +10,27 @@ const JoinPage:React.FC = () => {
     const [code, setCode] = useState<string>('')
     const [relation, setRelation] = useState<string>('')
     const [isCodeValidated, setIsCodeValidated] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [relationError, setRelationError] = useState<string>('')
 
     const handleCodeValidation = async () => {
         if (code.length !== 8) return
 
-        setIsLoading(true)
         setErrorMessage('')
 
         apiClient.put('/social/family/invite', {
             familyCode: code
         }).then(res => {
             console.log(res)
-            setIsCodeValidated(true)
             setErrorMessage('')
+            if(res.data.message == 'exist') {
+                setIsCodeValidated(true)
+            } else if(res.data.message == 'not exist') {
+                setErrorMessage('초대코드를 다시 확인해 주세요.')
+            }
         }).catch(err => {
             console.log(err)
             setErrorMessage('초대코드를 다시 확인해 주세요.')
-        }).finally(() => {
-            setIsLoading(false)
         })
     }
 

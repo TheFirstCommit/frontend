@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { tokenStorage } from "./token";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8080'; //백엔드ip로

@@ -1,5 +1,4 @@
 import Icon_Back from '@/assets/icons/icon_Back.svg'
-import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 interface HeaderProps {
@@ -10,12 +9,29 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleBackClick = () => {
+    const handleBackClick = () => {
     // /mypage/group/payment 경로일 때는 /mypage로 이동
     if (location.pathname === '/mypage/group/payment') {
       navigate('/mypage')
     } else {
-      navigate(-1) // 다른 경로에서는 이전 페이지로 돌아가기
+      // 현재 경로에서 한 단계씩 내려가기
+      const pathSegments = location.pathname.split('/').filter(Boolean)
+
+      if (pathSegments.length === 0) {
+        // 루트 경로(/)인 경우 /home으로 이동
+        navigate('/home')
+             } else {
+         // 마지막 세그먼트를 제거하고 새로운 경로 생성
+         const remainingSegments = pathSegments.slice(0, -1)
+         if (remainingSegments.length === 0) {
+           // 더 이상 상위 경로가 없으면 /home으로 이동
+           navigate('/home')
+         } else {
+           // 남은 세그먼트들로 경로 생성
+           const newPath = '/' + remainingSegments.join('/')
+           navigate(newPath)
+         }
+       }
     }
   }
 

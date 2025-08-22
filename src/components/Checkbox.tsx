@@ -1,3 +1,6 @@
+import checkbox from '@/assets/icons/checkbox.svg'
+import checkbox_none from '@/assets/icons/checkbox-none.svg'
+
 interface CheckboxProps {
   checked: boolean
   text: string
@@ -26,13 +29,13 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         <div className={`w-8 h-8 flex items-center justify-center transition-opacity duration-200 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
           {checked ? (
             <img
-              src="/src/assets/icons/checkbox.svg"
+              src={checkbox}
               alt="체크됨"
               className="w-8 h-8"
             />
           ) : (
             <img
-              src="/src/assets/icons/checkbox-none.svg"
+              src={checkbox_none}
               alt="체크 안됨"
               className="w-8 h-8"
             />

@@ -14,12 +14,19 @@ const Group_Payment: React.FC = () => {
         cardCampany: '',
         cardNumber: '',
     })
+    const [memberList, setMemberList] = useState([])
 
-    const memberList = [
-        {id: 1, name: '테스트트'},
-        {id: 2, name: '테스트트2'},
-        {id: 3, name: '테스트트3'},
-    ]
+    useEffect(() => {
+        apiClient.get('/api/user/delete').then(res => {
+            if(res.data.data.familyMember.members) {
+                const members = res.data.data.familyMember.members.map((member: { id: number; name: string; relation:string }) => ({
+                    id: member.id,
+                    name: member.name,
+                }))
+                setMemberList(members)
+            }
+        })
+    },[])
 
     const handleUnsubscribe = () => {
         setLeaderChange(true)
@@ -28,6 +35,13 @@ const Group_Payment: React.FC = () => {
     const handleUnsubCheck = () => {
         setLeaderChange(false)
         setUnSubCheck(true)
+        apiClient.delete('/api/user/delete', {
+            data: {
+                nextLeaderId: nextLeader
+            }
+        }).then(() => {
+            navigate('/mypage')
+        })
     }
 
     useEffect(() => {

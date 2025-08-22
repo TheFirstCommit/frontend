@@ -19,7 +19,7 @@ export const Group_Button:React.FC<Group_ButtonProps> = ({text, className, onCli
             <button
                 className={`${className} border-2 border-gray-500
                 text-primary-500 font-semibold text-xl w-[180px] h-[180px] rounded-full
-                hover:cursor-pointer transition-all duration-100
+                hover:cursor-pointer transition-all duration-200
                 ${isClicked || isSelected ? 'bg-primary-100 text-primary-900 border-primary-500' : 'bg-white'}`}
                 onClick={handleClick}
             >

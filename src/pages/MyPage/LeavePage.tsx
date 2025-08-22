@@ -4,7 +4,7 @@ import { Checkbox } from '@/components/Checkbox'
 import { Dropdown_Dynamic } from '@/components/Dropdown_Dynamic'
 import Modal from '@/components/Modal'
 import { apiClient } from '@/shared/api/client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface Member {
@@ -45,27 +45,27 @@ const LeavePage: React.FC = () => {
     { id: 5, name: '다른 방법으로 가족과 소식을 공유해요.' },
   ]
 
+  useEffect(() => {
+    apiClient.get('/api/user/delete').then((res) => {
+      setIsLeader(res.data.data.isLeader)
+      setMemberCount(res.data.data.familyMember.memberCount)
+      if(res.data.data.familyMember.members) {
+        const members = res.data.data.familyMember.members.map((member: { id: number; name: string; relation:string }) => ({
+          id: member.id,
+          name: member.name,
+        }))
+        setMemberList(members)
+      }
+      console.log(res)
+    })
+  }, [])
+
   const handleLeave = () => {
     apiClient
       .get('/api/user/delete')
-      .then((res: { data: ApiResponse }) => {
-        console.log(res)
-        const { isLeader: leaderStatus, familyMember } = res.data.data
-
-        setIsLeader(leaderStatus)
-        setMemberCount(familyMember.memberCount)
-
-        // 멤버 리스트 설정
-        if (familyMember && familyMember.members) {
-          const memberOptions = familyMember.members.map(member => ({
-            id: member.id,
-            name: member.name,
-          }))
-          setMemberList(memberOptions)
-        }
-
+      .then((res) => {
         // 리더 여부에 따라 모달 표시
-        if (leaderStatus && familyMember.memberCount > 1) {
+        if (isLeader && memberCount > 1) {
           // 리더인 경우 리더 변경 모달 표시
           setIsLeaderChangeModal(true)
         } else {
@@ -95,16 +95,14 @@ const LeavePage: React.FC = () => {
 
   const handleLeaveConfirm = () => {
     if (isLeader && memberCount > 1) {
-      apiClient.delete('/api/user/delete', {
-        data: {
+      apiClient.post('/api/user/delete', {
           nextLeaderId: nextLeader
-        }
       }).then(() => {
         setIsLeaveConfirmModal(false)
         navigate('/')
       })
     } else {
-      apiClient.delete('/api/user/delete').then(() => {
+      apiClient.post('/api/user/delete').then(() => {
         setIsLeaveConfirmModal(false)
         navigate('/')
       })
@@ -174,7 +172,7 @@ const LeavePage: React.FC = () => {
         <div className="flex flex-col items-center justify-center gap-5 px-6 pt-8">
           <div className="flex flex-col items-center justify-center gap-2">
             <p className="text-[16px] font-semibold text-gray-900">
-              정말 <span className="text-[#DB3448]">해지하실건가요?</span>
+              정말 <span className="text-[#DB3448]">해지하실건가요</span>?
             </p>
             <p className="text-[14px] font-normal text-gray-800">해지하면 다음 소식지는 발행되지 않아요.</p>
           </div>
