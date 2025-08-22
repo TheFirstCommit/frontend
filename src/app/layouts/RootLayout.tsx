@@ -6,7 +6,7 @@ export default function RootLayout() {
   const location = useLocation()
 
   // Header와 Footer를 숨길 경로들
-  const hideHeaderPaths = ['/', '/login', '/signup', '/signup/complete', '/billing', '/billing/payment/success', '/billing/payment/fail', '/family-group', '/layouts', '/social/kakao', '/social/google', '/social/naver' ]
+  const hideHeaderPaths = ['/', '/login', '/signup', '/signup/complete', '/billing', '/billing/payment/success', '/billing/payment/fail', '/family-group', '/layouts', '/social/kakao', '/social/google', '/social/naver', '/home' ]
 
   const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/social/kakao', '/social/google', '/social/naver', '/family-group', '/family-group/create', '/billing', '/billing/payment/success', '/billing/payment/fail', '/posting', '/family-group/create/payment', '/family-group/join', '/my-family/elder-info', '/my-family/elder-info/edit', '/layouts', '/compose', '/mypage/info', '/mypage/info/edit', '/mypage/group/payment', '/mypage/leave', '/mypage/group/payment/register']
 
