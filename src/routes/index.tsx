@@ -29,6 +29,7 @@ import LeavePage from '@/pages/MyPage/LeavePage'
 import HomePage from '@/pages/HomePage'
 import FeedboxPage from '@/pages/FeedboxPage'
 import MyPage_PaymentRegister from '@/pages/MyPage/MyPage_PaymentRegister'
+import InviteCodePage from "@/pages/Family/FamilyCodePage";
 
 export const router = createBrowserRouter([
   {
@@ -144,6 +145,10 @@ export const router = createBrowserRouter([
       {
         path: '/feedbox',
         element: <FeedboxPage />
+      },
+      {
+        path: '/invite-code',
+        element: <InviteCodePage />
       }
     ],
   },
