@@ -19,22 +19,22 @@ type Layout = {
 };
 
 const LAYOUTS: Layout[] = [
-  { id: "one-portrait", thumb: "/images/layout1.png" },
-  { id: "one-landscape", thumb: "/images/layout2.png" },
+  { id: "one-portrait", name: "1", thumb: "/images/layout1.png" },
+  { id: "one-landscape", name: "2", thumb: "/images/layout2.png" },
 
-  { id: "two-h", thumb: "/images/layout3.png" },
-  { id: "two-v", thumb: "/images/layout4.png", },
+  { id: "two-h", name: "3", thumb: "/images/layout3.png" },
+  { id: "two-v", name: "4", thumb: "/images/layout4.png", },
 
   // 위 1행: 1칸+1칸, 아래 2행: 큰 1칸(두 행 차지)
-  { id: "2plus1", thumb: "/images/layout5.png" },
+  { id: "2plus1", name: "5", thumb: "/images/layout5.png" },
 
   // 위 2행: 큰 1칸(두 행 차지), 아래 1행: 1칸+1칸
-  { id: "1plus2", thumb: "/images/layout6.png" },
+  { id: "1plus2", name: "6", thumb: "/images/layout6.png" },
 
   // 위 1행: 1칸+1칸, 아래 가운데 1칸
-  { id: "2top1bottom", thumb: "/images/layout7.png" },
+  { id: "2top1bottom", name: "7", thumb: "/images/layout7.png" },
 
-  { id: "two-by-two", thumb: "/images/layout8.png" }
+  { id: "two-by-two", name: "8", thumb: "/images/layout8.png" }
 ];
 
 function LayoutCard({
