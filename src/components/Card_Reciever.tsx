@@ -14,6 +14,14 @@ export const Card_Reciever: React.FC<CardRecieverProps> = ({
   imgUrl = null,
   onClick
 }) => {
+  // date 값을 yyyy-mm-dd에서 yyyy.mm.dd 형식으로 변환
+  const formatDate = (dateString: string) => {
+    if (!dateString || dateString === '1900.00.00') return dateString
+    return dateString.replace(/-/g, '.')
+  }
+
+  const formattedDate = formatDate(date)
+
   return (
     <div
       className="flex items-center justify-between p-4 bg-background2 rounded-xl cursor-pointer"
@@ -29,7 +37,7 @@ export const Card_Reciever: React.FC<CardRecieverProps> = ({
         {/* 중앙 텍스트 영역 */}
         <div className="flex flex-col">
           <span className="font-extrabold text-gray-900 text-xl">{name}</span>
-          <span className="text-gray-900 text-[16px] font-normal">{date}</span>
+          <span className="text-gray-900 text-[16px] font-normal">{formattedDate}</span>
         </div>
       </div>
 

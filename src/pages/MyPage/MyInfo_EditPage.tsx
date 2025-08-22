@@ -48,8 +48,8 @@ const MyInfo_EditPage: React.FC = () => {
       if (selectedImage) {
         setImgUrl(URL.createObjectURL(selectedImage))
       }
+      navigate('/mypage/info')
     })
-    navigate('/mypage/info')
   }
 
   useEffect(() => {

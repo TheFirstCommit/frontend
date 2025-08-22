@@ -86,7 +86,7 @@ const ElderInfo_EditPage: React.FC = () => {
       <div className="flex flex-col gap-4">
         <div className="flex flex-row justify-between mt-6">
           <p className="text-[16px]">
-            <span className="font-semibold">소식지를 전달받을 분</span>이에요.
+            <span className="font-semibold">소식지를 전달받을 분</span>의 정보를 입력해주세요.
           </p>
         </div>
         <div className="flex flex-col items-center gap-3">

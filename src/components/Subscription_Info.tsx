@@ -25,7 +25,7 @@ export const Subscription_Info:React.FC<Subscription_InfoProps> = ({ subscriptio
         <div className='bg-background2 border border-primary-700 rounded-xl py-3 px-4'>
             <div className='flex justify-between'>
                 <p className='font-extrabold text-lg'>소식지 발행 정기 구독</p>
-                {subscription ? '' : <p>₩{price}/월</p>}
+                {subscription ? '' : <p>₩{price?.toLocaleString()}/월</p>}
             </div>
 
             {subscription ? (
@@ -50,7 +50,7 @@ export const Subscription_Info:React.FC<Subscription_InfoProps> = ({ subscriptio
             ) : (
                 <div className='font-normal text-sm text-gray-700 gap-1'>
                     <p>현재 구독 상태가 아니에요.</p>
-                    <p>구독 결제는 <span className='font-semibold'>가족그룹의 리더</span>만 가능해요,</p>
+                    <p>구독 결제는 <span className='font-semibold'>가족 그룹의 리더</span>만 가능해요,</p>
                     <p>정기 구독을 시작하고 가족에게 소식을 전해보세요!</p>
                 </div>
             )}

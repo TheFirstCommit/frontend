@@ -76,19 +76,12 @@ const CreateGroup: React.FC = () => {
       setErrorMessage('relation', null)
     }
 
-    // 어르신 이미지 검증
-    if (!elderImg) {
-      setErrorMessage('elderImg', '받는분의 프로필 사진을 선택해주세요.')
-      hasError = true
-    } else {
-      setErrorMessage('elderImg', null)
-    }
-
     if (!hasError) {
       const formData = new FormData()
       formData.append('familyName', familyName)
       formData.append('elder', new Blob([JSON.stringify(elder)], { type: 'application/json' }))
       formData.append('elderImg', elderImg as File)
+      formData.append('relation', relation)
       apiClient
         .post('/social/family', formData)
         .then(res => {

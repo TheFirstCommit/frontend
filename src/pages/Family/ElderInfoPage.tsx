@@ -25,7 +25,21 @@ const ElderInfoPage: React.FC = () => {
         apiClient.get('/api/family').then(res => {
             console.log(res)
             setName(res.data.data.elder.name)
-            setBirth(res.data.data.elder.birth)
+            // birth 값을 yyyy-mm-dd에서 yyyy년mm월dd일 형식으로 변환
+            const birthDate = res.data.data.elder.birth
+            const formatBirthToKorean = (dateString: string) => {
+                if (!dateString) return ''
+                const parts = dateString.split('-')
+                if (parts.length === 3) {
+                    const year = parts[0]
+                    const month = parts[1]
+                    const day = parts[2]
+                    return `${year}년 ${month}월 ${day}일`
+                }
+                return dateString
+            }
+            const formattedBirth = formatBirthToKorean(birthDate)
+            setBirth(formattedBirth)
             setNumber(res.data.data.elder.number)
             setAddressNumber(res.data.data.elder.addressNumber)
             setAddress(res.data.data.elder.address)

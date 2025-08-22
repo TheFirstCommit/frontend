@@ -106,7 +106,7 @@ const MyPage: React.FC = () => {
 
             <div className='flex flex-col gap-3 mt-3'>
                 <div>
-                    <MyPage_List contents='내 정보 변경' onClick={handleEdit}/>
+                    <MyPage_List contents='내 정보 관리' onClick={handleEdit}/>
                     {isLeader && <MyPage_List contents='결제 수단 관리' onClick={handleGroupPayment}/>}
                 </div>
                 <div>

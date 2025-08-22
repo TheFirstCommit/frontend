@@ -38,6 +38,13 @@ const SignUpPage: React.FC = () => {
         return
       }
 
+      // 생년월일 형식 검증 (yyyy-mm-dd 형식인지 확인)
+      const birthRegex = /^\d{4}-\d{2}-\d{2}$/
+      if (!birthRegex.test(info.birth)) {
+        setErrorMessage('birth', '생년월일을 입력해주세요.')
+        return
+      }
+
       // 전화번호 검증 (숫자만 추출해서 11자리인지 확인)
       const phoneNumbers = info.phone.replace(/[^0-9]/g, '')
       if (phoneNumbers.length !== 11) {

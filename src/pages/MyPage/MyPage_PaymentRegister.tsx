@@ -99,7 +99,7 @@ const MyPage_PaymentRegister: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-3 pb-8 border-b border-gray-300">
-          <p className="text-base">오늘을 기준으로 가족 소식 발행일을 추천해드렸어요!</p>
+          <p className="text-base">가족 소식 마감일</p>
           <Radio_Button
             className="text-sm"
             value="SECOND_SUNDAY"
@@ -117,13 +117,13 @@ const MyPage_PaymentRegister: React.FC = () => {
         </div>
 
         <div className="mt-7">
-          <p className="mb-7">구독 결제일은 회원님의 소식 발행일에 맞춰 진행돼요.</p>
+          <p className="mb-7">카드를 등록하신 날을 기준으로 매월 같은 날짜에 자동 결제가 진행돼요.</p>
           <div className="flex flex-col gap-3">
             <p>결제 수단 등록</p>
             {cardAvailable ? (
-              <Button className="mx-4 text-primary-900" text="카드 등록완료" variant="primary" onClick={() => {}} />
+              <Button className="mx-4 py-3 text-primary-900" text="카드 등록완료" variant="primary" onClick={() => {}} />
             ) : (
-              <Button className="mx-4" text="카드 등록하기" variant="secondary" onClick={handlePayment} />
+              <Button className="mx-4 py-3" text="카드 등록하기" variant="secondary" onClick={handlePayment} />
             )}
             {paymentError && <p className="text-error text-sm ml-4">{paymentError}</p>}
           </div>

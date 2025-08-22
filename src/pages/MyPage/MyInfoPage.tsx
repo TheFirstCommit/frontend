@@ -2,13 +2,11 @@ import { TextField_Elder } from "@/components/TextField_Elder"
 import profileImage from '@/assets/images/profile.png'
 import edit_active from '@/assets/Icons/edit_Property 1=text.svg'
 import { useNavigate } from "react-router-dom"
-import { useMyInfoStore } from "@/stores/myInfo.store"
 import { useEffect, useState } from "react"
 import { apiClient } from "@/shared/api/client"
 
 const MyInfoPage: React.FC = () => {
     const navigate = useNavigate()
-    const {InfoData} = useMyInfoStore()
     const [name, setName] = useState('')
     const [birthday, setBirthday] = useState('')
     const [phone, setPhone] = useState('')
@@ -18,7 +16,20 @@ const MyInfoPage: React.FC = () => {
     useEffect(() => {
         apiClient.get('/api/user').then(res => {
             setName(res.data.data.userInfoDto.name)
-            setBirthday(res.data.data.userInfoDto.birth)
+            const birthDate = res.data.data.userInfoDto.birth
+            const formatBirthToKorean = (dateString: string) => {
+                if (!dateString) return ''
+                const parts = dateString.split('-')
+                if (parts.length === 3) {
+                    const year = parts[0]
+                    const month = parts[1]
+                    const day = parts[2]
+                    return `${year}년 ${month}월 ${day}일`
+                }
+                return dateString
+            }
+            const formattedBirth = formatBirthToKorean(birthDate)
+            setBirthday(formattedBirth)
             setPhone(res.data.data.userInfoDto.number)
             setRelation(res.data.data.userInfoDto.relation)
             setImgUrl(res.data.data.userInfoDto.img?.cid || null)
