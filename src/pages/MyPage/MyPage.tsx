@@ -63,7 +63,11 @@ const MyPage: React.FC = () => {
     }
 
     const handleGroupPayment = () => {
-        navigate('/mypage/group/payment')
+        if(paymentData.hasCard) {
+            navigate('/mypage/group/payment')
+        } else {
+            navigate('/mypage/group/payment/register')
+        }
     }
 
     const openLogoutModal = () => {

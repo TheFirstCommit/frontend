@@ -3,8 +3,10 @@ import { Dropdown_Dynamic } from "@/components/Dropdown_Dynamic"
 import Modal from "@/components/Modal"
 import { apiClient } from "@/shared/api/client"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Group_Payment: React.FC = () => {
+    const navigate = useNavigate()
     const [leaderChange, setLeaderChange] = useState(false)
     const [nextLeader, setNextLeader] = useState('')
     const [unSubCheck, setUnSubCheck] = useState(false)
@@ -53,7 +55,7 @@ const Group_Payment: React.FC = () => {
                         <p className='text-[12px] font-normal text-gray-900'>{cardData.cardNumber}</p>
                     </div>
                 </div>
-                <Button_Sub text='변경' />
+                <Button_Sub text='변경' onClick={() => navigate('/mypage/group/payment/register')} />
             </div>
 
             <div className='px-4 mt-auto mb-9'>

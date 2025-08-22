@@ -8,7 +8,7 @@ export default function RootLayout() {
   // Header와 Footer를 숨길 경로들
   const hideHeaderPaths = ['/', '/login', '/signup', '/signup/complete', '/billing', '/family-group', '/layouts']
 
-  const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/family-group', '/family-group/create', '/billing', '/posting', '/family-group/create/payment', '/family-group/join', '/my-family/elder-info', '/my-family/elder-info/edit', '/layouts', '/compose', '/mypage/info', '/mypage/info/edit', '/mypage/group/payment', '/mypage/leave']
+  const hideFooterPaths = ['/', '/login', '/signup', '/signup/complete', '/family-group', '/family-group/create', '/billing', '/posting', '/family-group/create/payment', '/family-group/join', '/my-family/elder-info', '/my-family/elder-info/edit', '/layouts', '/compose', '/mypage/info', '/mypage/info/edit', '/mypage/group/payment', '/mypage/leave', '/mypage/group/payment/register']
 
   // 현재 경로가 Header를 숨겨야 하는지 확인
   const shouldHideHeader = hideHeaderPaths.includes(location.pathname)
