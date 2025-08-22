@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { tokenStorage } from "./token";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8080'; //백엔드ip로
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'https://api.deardream.r-e.kr/'; //백엔드ip로
 const REFRESH_URL = "/public/token";
 
 declare module "axios" {
@@ -19,7 +19,7 @@ export const apiClient = axios.create({
 })
 
 export const apiClientPublic = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://api.deardream.r-e.kr/',
   withCredentials: false,
 })
 
