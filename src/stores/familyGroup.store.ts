@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 interface FamilyGroupStore {
   familyName: string
@@ -41,74 +40,71 @@ interface FamilyGroupStore {
 }
 
 export const useFamilyGroupStore = create<FamilyGroupStore>()(
-  persist(
-    set => ({
-      familyName: '',
-      paymentDay: '',
-      relation: '',
-      elder: {
-        name: '',
-        birth: '',
-        number: '',
-        address: '',
-        addressDetail: '',
-        addressNumber: '',
-      },
+  set => ({
+    familyName: '',
+    paymentDay: '',
+    relation: '',
+    elder: {
+      name: '',
+      birth: '',
+      number: '',
+      address: '',
+      addressDetail: '',
+      addressNumber: '',
+    },
+    elderImg: null,
+    errorMessage: {
+      familyName: null,
+      elderName: null,
+      elderBirth: null,
+      elderNumber: null,
+      elderAddressDetail: null,
+      elderAddressNumber: null,
+      relation: null,
       elderImg: null,
-      errorMessage: {
-        familyName: null,
-        elderName: null,
-        elderBirth: null,
-        elderNumber: null,
-        elderAddressDetail: null,
-        elderAddressNumber: null,
-        relation: null,
+    },
+    setFamilyName: (familyName: string) => set({ familyName }),
+    setPaymentDay: (paymentDay: string) => set({ paymentDay }),
+    setRelation: (relation: string) => set({ relation }),
+    setElder: (elder: {
+      name: string
+      birth: string
+      number: string
+      address: string
+      addressDetail: string
+      addressNumber: string
+    }) => set({ elder }),
+    setElderImg: (elderImg: File | null) => set({ elderImg }),
+    setErrorMessage: (key, value) => {
+      set(state => ({
+        errorMessage: { ...state.errorMessage, [key]: value },
+      }))
+    },
+    reset: () => {
+      set({
+        familyName: '',
+        paymentDay: '',
+        relation: '',
+        elder: {
+          name: '',
+          birth: '',
+          number: '',
+          address: '',
+          addressDetail: '',
+          addressNumber: '',
+        },
         elderImg: null,
-      },
-      setFamilyName: (familyName: string) => set({ familyName }),
-      setPaymentDay: (paymentDay: string) => set({ paymentDay }),
-      setRelation: (relation: string) => set({ relation }),
-      setElder: (elder: {
-        name: string
-        birth: string
-        number: string
-        address: string
-        addressDetail: string
-        addressNumber: string
-      }) => set({ elder }),
-      setElderImg: (elderImg: File | null) => set({ elderImg }),
-      setErrorMessage: (key, value) => {
-        set(state => ({
-          errorMessage: { ...state.errorMessage, [key]: value },
-        }))
-      },
-      reset: () => {
-        set({
-          familyName: '',
-          paymentDay: '',
-          relation: '',
-          elder: {
-            name: '',
-            birth: '',
-            number: '',
-            address: '',
-            addressDetail: '',
-            addressNumber: '',
-          },
+        errorMessage: {
+          familyName: null,
+          elderName: null,
+          elderBirth: null,
+          elderNumber: null,
+          elderAddressDetail: null,
+          elderAddressNumber: null,
+          relation: null,
           elderImg: null,
-          errorMessage: {
-            familyName: null,
-            elderName: null,
-            elderBirth: null,
-            elderNumber: null,
-            elderAddressDetail: null,
-            elderAddressNumber: null,
-            relation: null,
-            elderImg: null,
-          },
-        })
-      },
-    }),
-    { name: 'family-group-store' },
-  ),
+        },
+      })
+    },
+  }),
 )

@@ -99,11 +99,13 @@ const LeavePage: React.FC = () => {
           nextLeaderId: nextLeader
       }).then(() => {
         setIsLeaveConfirmModal(false)
+        localStorage.clear()
         navigate('/')
       })
     } else {
       apiClient.post('/api/user/delete').then(() => {
         setIsLeaveConfirmModal(false)
+        localStorage.clear()
         navigate('/')
       })
     }

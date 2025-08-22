@@ -34,9 +34,9 @@ const Group_Payment: React.FC = () => {
 
     const handleUnsubscribe = () => {
         if(memberCount > 1 && isLeader) {
-            setUnSubCheck(true)
-        } else {
             setLeaderChange(true)
+        } else {
+            setUnSubCheck(true)
         }
     }
 
