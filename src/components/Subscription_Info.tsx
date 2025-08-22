@@ -17,7 +17,7 @@ export const Subscription_Info:React.FC<Subscription_InfoProps> = ({ subscriptio
         if(paymentDay == 'SECOND_SUNDAY') {
             setPaymentDayString('매월 둘째 주 일요일')
         } else if(paymentDay == 'FOURTH_SUNDAY') {
-            setPaymentDayString('매 넷째 주 일요일')
+            setPaymentDayString('매월 넷째 주 일요일')
         }
     }, [paymentDay])
 

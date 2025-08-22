@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { tokenStorage } from "./token";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://134.185.99.89:8080'; //백엔드ip로
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8080'; //백엔드ip로
 const REFRESH_URL = "/public/token";
 
 declare module "axios" {

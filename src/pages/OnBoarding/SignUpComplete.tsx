@@ -14,7 +14,9 @@ const SignUpComplete:React.FC = () => {
         formData.append('name', info.name ?? '')
         formData.append('birth', info.birth ?? '')
         formData.append('number', info.phone ?? '')
-        formData.append('img', info.profile as File)
+        if(info.profile) {
+            formData.append('img', info.profile as File)
+        }
 
         apiClient.patch('/public/user', formData).then(res => {
             console.log(res)
