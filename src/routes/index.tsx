@@ -148,6 +148,10 @@ export const router = createBrowserRouter([
       {
         path: '/invite-code',
         element: <InviteCodePage />
+      },
+      {
+        path: 'posting',
+        element: <LayoutsPage />
       }
     ],
   },

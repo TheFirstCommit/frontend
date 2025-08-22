@@ -72,7 +72,7 @@ export const NavBar: React.FC = () => {
                 {/* 포스팅 버튼 (중앙) */}
                 <div
                     className="cursor-pointer transform -translate-y-2"
-                    onClick={handlePostingClick}
+                    onClick={() => handleTabClick('/posting')}
                 >
                     <img
                     src={Icon_Posting}
