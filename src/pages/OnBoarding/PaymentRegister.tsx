@@ -12,7 +12,7 @@ const PaymentRegister: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams] = useSearchParams()
-  const { setPaymentDay, paymentDay, familyName, elder, relation, elderImg } = useFamilyGroupStore()
+  const { setPaymentDay, paymentDay } = useFamilyGroupStore()
   const [cardAvailable, setCardAvailable] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [customerKey] = useState(() => generateCustomerKey())
@@ -120,14 +120,14 @@ const PaymentRegister: React.FC = () => {
           {cardAvailable ? (
             <Button className="mx-4 text-primary-900" text="카드 등록완료" variant="primary" onClick={() => {}} />
           ) : (
-            <Button className="mx-4" text="카드 등록하기" variant="secondary" onClick={handlePayment} />
+            <Button className="mx-4 py-3" text="카드 등록하기" variant="secondary" onClick={handlePayment} />
           )}
           {paymentError && <p className="text-error text-sm ml-4">{paymentError}</p>}
         </div>
       </div>
       {cardAvailable ? (
         <div className="mt-auto flex flex-col gap-3 items-center">
-          <p className="text-sm">매월 같은 주 일요일에 소식지를 발행드릴게요.</p>
+          <p className="text-sm">마감일 이후 월요일 자정에 소식지를 발행해드려요.</p>
           <CTA className="mb-9" text="시작하기" variant="main" onClick={handleStart} />
         </div>
       ) : (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { makeFeedPdfBlob } from '@/components/makePdf';
 import type { FeedItem } from '@/components/FeedPdf';
 import { PdfSlideViewer } from '@/components/PdfViewer';

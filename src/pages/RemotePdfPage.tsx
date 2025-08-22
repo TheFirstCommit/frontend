@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { PdfSlideViewer } from '@/components/PdfViewer';
 import { saveBlob } from '@/utils/saveBlob';
 
@@ -31,7 +31,7 @@ export default function RemotePdfPage() {
 
         const hdrName = parseFilenameFromDisposition(res.headers.get('content-disposition'));
         setFileName(hdrName ?? inferNameFromPath(path, 'document.pdf'));
-        
+
         const b = await res.blob();
         setBlob(b);
         const objUrl = URL.createObjectURL(b);
@@ -60,7 +60,7 @@ export default function RemotePdfPage() {
             title={blob ? fileName : '먼저 PDF를 여세요'}
         >다운로드
         </button>
-        {url && <PdfSlideViewer key={url} file={url} title={fileName} onClose={close} />} 
+        {url && <PdfSlideViewer key={url} file={url} title={fileName} onClose={close} />}
         {/* key=url → url 변경 시 컴포넌트 강제 재마운트 */}
         </div>
     );

@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Icon_Home_Off from '@/assets/Icons/Property 1=home, Property 2=off.svg'
 import Icon_Home_On from '@/assets/Icons/Property 1=home, Property 2=on.svg'
 import Icon_Family_Off from '@/assets/Icons/Property 1=family, Property 2=off.svg'

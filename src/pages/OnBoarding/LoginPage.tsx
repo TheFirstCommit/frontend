@@ -6,7 +6,7 @@ import logo from '@/assets/images/logo.png'
 
 const LoginPage: React.FC = () => {
   const handleSocialLogin = async (provider: string) => {
-    window.location.href = `http://localhost:8080/public/social/${provider}`
+    window.location.href = `https://api.deardream.r-e.kr/public/social/${provider}`
   }
 
   return (

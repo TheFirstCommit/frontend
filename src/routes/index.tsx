@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
 import RootLayout from '@/app/layouts/RootLayout'
-import { MainPage } from '@/pages/MainPage'
 import { NotFoundPage } from '@/pages/NotFound'
 import SocialLogin from '@/pages/SocialLogin'
 import LoginPage from '@/pages/OnBoarding/LoginPage'

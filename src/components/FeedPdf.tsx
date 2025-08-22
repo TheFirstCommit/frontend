@@ -1,5 +1,4 @@
 // src/components/FeedPdf.tsx
-import React from 'react';
 import { Document, Page, Text, View, Image, StyleSheet, Font } from '@react-pdf/renderer';
 
 // 한글 폰트 등록 (앱에서 한 번만 실행되면 됨)

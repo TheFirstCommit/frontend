@@ -39,16 +39,7 @@ export function SuccessPage() {
     confirm()
   }, [searchParams, navigate])
 
-  return (
-    <div className="result wrapper">
-      <div className="box_section">
-        <p>카드 등록 성공</p>
-        <div>customerKey: {searchParams.get('customerKey')}</div>
-        <div>authKey: {searchParams.get('authKey')}</div>
-        <p>원래 페이지로 이동 중...</p>
-      </div>
-    </div>
-  )
+  return null
 }
 
 export function FailPage() {
@@ -62,14 +53,5 @@ export function FailPage() {
     navigate(`${returnUrl}?status=fail&message=${encodeURIComponent(errorMessage)}`)
   }, [searchParams, navigate])
 
-  return (
-    <div className="result wrapper">
-      <div className="box_section">
-        <h2>결제 실패</h2>
-        <p>{`에러 코드: ${searchParams.get('code')}`}</p>
-        <p>{`실패 사유: ${searchParams.get('message')}`}</p>
-        <p>원래 페이지로 이동 중...</p>
-      </div>
-    </div>
-  )
+  return null
 }

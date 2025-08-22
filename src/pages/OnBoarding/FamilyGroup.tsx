@@ -5,11 +5,17 @@ const FamilyGroup:React.FC = () => {
     const navigate = useNavigate()
 
     const handleCreate = () => {
-        navigate('/family-group/create')
+        const timer = setTimeout(() => {
+            navigate('/family-group/create')
+        }, 400)
+        return () => clearTimeout(timer)
     }
 
     const handleJoin = () => {
-        navigate('/family-group/join')
+        const timer = setTimeout(() => {
+            navigate('/family-group/join')
+        }, 400)
+        return () => clearTimeout(timer)
     }
 
     return (

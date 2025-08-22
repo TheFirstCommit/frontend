@@ -1,22 +1,23 @@
 import { Button, CTA } from "@/components/Buttons"
 import { Radio_Button } from "@/components/RadioButton"
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Modal from '@/components/Modal'
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk'
 import { generateCustomerKey } from '@/shared/utils/generateCustomerKey'
 import { useFamilyGroupStore } from '@/stores/familyGroup.store'
 import { apiClient } from "@/shared/api/client"
+import { usePaymentDayStore } from "@/stores/paymentDay.store"
 
 const MyPage_PaymentRegister: React.FC = () => {
     const navigate = useNavigate()
-    const location = useLocation()
     const [searchParams] = useSearchParams()
-    const { setPaymentDay, paymentDay, familyName, elder, relation, elderImg } = useFamilyGroupStore()
+    const { setPaymentDay, paymentDay } = useFamilyGroupStore()
     const [cardAvailable, setCardAvailable] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [customerKey] = useState(() => generateCustomerKey())
     const [paymentError, setPaymentError] = useState<string>('')
+    const {paymentDayStore} = usePaymentDayStore()
 
     // URL 파라미터로 카드 등록 결과 확인
     useEffect(() => {
@@ -62,17 +63,20 @@ const MyPage_PaymentRegister: React.FC = () => {
     useEffect(() => {
       const today = new Date()
       const dayOfMonth = today.getDate()
-
-      if (dayOfMonth >= 1 && dayOfMonth <= 15) {
-        setPaymentDay('SECOND_SUNDAY')
-        apiClient.patch('/api/family', {
-          paymentDay: 'SECOND_SUNDAY',
-        })
+      if(!paymentDayStore) {
+        if (dayOfMonth >= 1 && dayOfMonth <= 15) {
+          setPaymentDay('SECOND_SUNDAY')
+          apiClient.patch('/api/family', {
+            paymentDay: 'SECOND_SUNDAY',
+          })
+        } else {
+          setPaymentDay('FOURTH_SUNDAY')
+          apiClient.patch('/api/family', {
+            paymentDay: 'FOURTH_SUNDAY',
+          })
+        }
       } else {
-        setPaymentDay('FOURTH_SUNDAY')
-        apiClient.patch('/api/family', {
-          paymentDay: 'FOURTH_SUNDAY',
-        })
+        setPaymentDay(paymentDayStore)
       }
     }, [])
 

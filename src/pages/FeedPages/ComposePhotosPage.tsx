@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import PreviewModal from "@/components/PreviewModal";
 import { apiClient } from "@/shared/api/client";
+import { useNavigate } from 'react-router-dom';
 
 /** 레이아웃 메타: 썸네일 + 슬롯 개수(사진 최대 개수) */
 type LayoutMeta = {
@@ -24,9 +25,8 @@ const LAYOUTS: LayoutMeta[] = [
 ];
 
 export default function ComposePhotosPage() {
-  const navigate = useNavigate();
   const { state } = useLocation() as { state?: { layoutId?: string } };
-
+  const navigate = useNavigate();
   const selectedLayout = useMemo(() => {
     const id = state?.layoutId;
     return LAYOUTS.find(l => l.id === id) ?? LAYOUTS[0];
@@ -51,7 +51,7 @@ export default function ComposePhotosPage() {
       const form = new FormData();
       form.append("text", story);
       form.append("layout", String(selectedLayout.code));
-      files.forEach((f) => form.append("imageFiles", f)); 
+      files.forEach((f) => form.append("imageFiles", f));
 
       await apiClient.post("/api/feeds", form);
 

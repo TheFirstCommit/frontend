@@ -3,16 +3,36 @@ import profileImage from '@/assets/images/profile.png'
 import { useNavigate } from 'react-router-dom'
 import { TextField_Elder } from '@/components/TextField_Elder'
 import { useLeaderStore } from '@/stores/Leader.store'
-import { useFamilyStore } from '@/stores/family.store'
+import { useEffect, useState } from 'react'
+import { apiClient } from '@/shared/api/client'
 
 const ElderInfoPage: React.FC = () => {
     const navigate = useNavigate()
     const { isLeader } = useLeaderStore()
-    const { elder } = useFamilyStore()
+    const [name, setName] = useState('')
+    const [birth, setBirth] = useState('')
+    const [number, setNumber] = useState('')
+    const [addressNumber, setAddressNumber] = useState('')
+    const [address, setAddress] = useState('')
+    const [addressDetail, setAddressDetail] = useState('')
+    const [imgUrl, setImgUrl] = useState<string | null>(null)
 
     const handleEdit = () => {
         navigate('/my-family/elder-info/edit')
     }
+
+    useEffect(() => {
+        apiClient.get('/api/family').then(res => {
+            console.log(res)
+            setName(res.data.data.elder.name)
+            setBirth(res.data.data.elder.birth)
+            setNumber(res.data.data.elder.number)
+            setAddressNumber(res.data.data.elder.addressNumber)
+            setAddress(res.data.data.elder.address)
+            setAddressDetail(res.data.data.elder.addressDetail)
+            setImgUrl(res.data.data.elder.img?.cid || null)
+        })
+    }, [])
 
     return (
         <div className='bg-background min-h-[calc(100vh-56px)] flex flex-col px-6 gap-4'>
@@ -20,24 +40,24 @@ const ElderInfoPage: React.FC = () => {
             <div className='flex flex-col gap-4'>
                 <div className='flex flex-row justify-between mt-6'>
                     <p className='text-[16px]'><span className='font-semibold'>소식지를 전달받을 분</span>이에요.</p>
-                    {isLeader ? <img src={edit_active} alt="edit" onClick={handleEdit} /> : <div className='' />}
+                    {isLeader ? <img src={edit_active} alt="edit" className='cursor-pointer' onClick={handleEdit} /> : <div className='' />}
                 </div>
-                <img src={elder.imgUrl ? `https://api.deardream.r-e.kr/ipfs/${elder.imgUrl}` : profileImage} alt="profile" className='w-[84px] h-[84px] mx-auto bg-gray-400 rounded-full' />
+                <img src={imgUrl ? `https://api.deardream.r-e.kr/ipfs/${imgUrl}` : profileImage} alt="profile" className='w-[84px] h-[84px] mx-auto bg-gray-400 rounded-full' />
             </div>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-[16px] font-normal'>이름</p>
-                <TextField_Elder value={elder.name} />
+                <TextField_Elder value={name} />
             </div>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-[16px] font-normal'>생년월일</p>
-                <TextField_Elder value={elder.birth} />
+                <TextField_Elder value={birth} />
             </div>
 
             <div className='flex flex-col gap-4'>
                 <p className='text-[16px] font-normal'>전화번호</p>
-                <TextField_Elder value={elder.number} />
+                <TextField_Elder value={number} />
             </div>
 
             <div className='flex flex-col gap-3'>
@@ -45,15 +65,15 @@ const ElderInfoPage: React.FC = () => {
                     <div className='flex flex-col gap-3'>
                         <div className='flex gap-2'>
                             <TextField_Elder
-                                value={elder.addressNumber}
+                                value={addressNumber}
                             />
                             <div className='w-[50%]'/>
                         </div>
                         <TextField_Elder
-                            value={elder.address}
+                            value={address}
                         />
                         <TextField_Elder
-                            value={elder.addressDetail}
+                            value={addressDetail}
                         />
                     </div>
                 </div>

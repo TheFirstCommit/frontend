@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const STATIC_IMAGES: string[] = [
@@ -19,22 +19,22 @@ type Layout = {
 };
 
 const LAYOUTS: Layout[] = [
-  { id: "one-portrait", name: "1", thumb: "/images/layout1.png" },
-  { id: "one-landscape", name: "2", thumb: "/images/layout2.png" },
+  { id: "one-portrait", name: "세로 1장", thumb: "public/images/layout1.png" },
+  { id: "one-landscape", name: "가로 1장", thumb: "public/images/layout2.png" },
 
-  { id: "two-h", name: "3", thumb: "/images/layout3.png" },
-  { id: "two-v", name: "4", thumb: "/images/layout4.png", },
+  { id: "two-h", name: "가로 2장", thumb: "public/images/layout3.png" },
+  { id: "two-v", name: "세로 2장", thumb: "public/images/layout4.png" },
 
   // 위 1행: 1칸+1칸, 아래 2행: 큰 1칸(두 행 차지)
-  { id: "2plus1", name: "5", thumb: "/images/layout5.png" },
+  { id: "2plus1", name: "2+1 레이아웃", thumb: "public/images/layout5.png" },
 
   // 위 2행: 큰 1칸(두 행 차지), 아래 1행: 1칸+1칸
-  { id: "1plus2", name: "6", thumb: "/images/layout6.png" },
+  { id: "1plus2", name: "1+2 레이아웃", thumb: "public/images/layout6.png" },
 
   // 위 1행: 1칸+1칸, 아래 가운데 1칸
-  { id: "2top1bottom", name: "7", thumb: "/images/layout7.png" },
+  { id: "2top1bottom", name: "2상단1하단", thumb: "public/images/layout7.png" },
 
-  { id: "two-by-two", name: "8", thumb: "/images/layout8.png" }
+  { id: "two-by-two", name: "2x2 그리드", thumb: "public/images/layout8.png" }
 ];
 
 function LayoutCard({
@@ -67,7 +67,6 @@ function LayoutCard({
 
 export default function LayoutsPage() {
   const [selectedId, setSelectedId] = useState<string>(LAYOUTS[0].id);
-  const layout = useMemo(() => LAYOUTS.find((l) => l.id === selectedId)! ?? LAYOUTS[0], [selectedId]);
   const navigate = useNavigate();
 
   return (

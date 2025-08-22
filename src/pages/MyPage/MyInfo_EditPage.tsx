@@ -1,8 +1,7 @@
-import edit_active from '@/assets/Icons/edit_Property 1=text.svg'
 import profileImage from '@/assets/images/profile.png'
 import { TextField } from '@/components/TextField'
 import { useEffect, useState } from 'react'
-import { Button, CTA } from '@/components/Buttons'
+import { CTA } from '@/components/Buttons'
 import { useNavigate } from 'react-router-dom'
 import { Dropdown_Relation } from '@/components/Dropdown_Relation'
 import { Dropdown_Date } from '@/components/Dropdown_Date'
@@ -16,7 +15,8 @@ const MyInfo_EditPage: React.FC = () => {
   const [phone, setPhone] = useState('')
   const [relation, setRelation] = useState('')
   const [birthday, setBirthday] = useState('')
-  const { InfoData, setInfoData, setImgUrl } = useMyInfoStore()
+  const [imgUrl, setImgUrl] = useState<string | null>(null)
+  const { InfoData, setInfoData } = useMyInfoStore()
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +28,9 @@ const MyInfo_EditPage: React.FC = () => {
   const handleSave = () => {
     const formData = new FormData()
     formData.append('name', name)
-    formData.append('phone', phone)
+    formData.append('number', phone)
     formData.append('relation', relation)
-    formData.append('birthday', birthday)
+    formData.append('birth', birthday)
 
     if (selectedImage) {
       formData.append('img', selectedImage)
@@ -53,11 +53,14 @@ const MyInfo_EditPage: React.FC = () => {
   }
 
   useEffect(() => {
-    setName(InfoData.name)
-    setPhone(InfoData.phone)
-    setRelation(InfoData.relation)
-    setBirthday(InfoData.birthday)
-  }, [InfoData])
+    apiClient.get('/api/user').then(res => {
+      setName(res.data.data.userInfoDto.name)
+      setPhone(res.data.data.userInfoDto.number)
+      setRelation(res.data.data.userInfoDto.relation)
+      setBirthday(res.data.data.userInfoDto.birth)
+      setImgUrl(res.data.data.userInfoDto.img?.cid || null)
+    })
+  }, [])
 
   return (
     <div className="bg-background min-h-[calc(100vh-56px)] flex flex-col px-6 gap-4">
@@ -69,9 +72,9 @@ const MyInfo_EditPage: React.FC = () => {
               alt="profile"
               className="w-[84px] h-[84px] mx-auto rounded-full object-cover"
             />
-          ) : InfoData.imgUrl ? (
+          ) : imgUrl ? (
             <img
-              src={`https://api.deardream.r-e.kr/ipfs/${InfoData.imgUrl}`}
+              src={`https://api.deardream.r-e.kr/ipfs/${imgUrl}`}
               alt="profile"
               className="w-[84px] h-[84px] mx-auto rounded-full object-cover bg-gray-400"
             />

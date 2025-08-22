@@ -1,5 +1,4 @@
 import { pdf } from '@react-pdf/renderer';
-import React from 'react';
 import { FeedPdf } from './FeedPdf';
 import type { FeedItem } from './FeedPdf';
 
