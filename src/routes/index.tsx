@@ -27,6 +27,7 @@ import MyInfo_EditPage from '@/pages/MyPage/MyInfo_EditPage'
 import Group_Payment from '@/pages/MyPage/Group_Payment'
 import LeavePage from '@/pages/MyPage/LeavePage'
 import HomePage from '@/pages/HomePage'
+import MyPage_PaymentRegister from '@/pages/MyPage/MyPage_PaymentRegister'
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +127,10 @@ export const router = createBrowserRouter([
       {
         path: 'mypage/group/payment',
         element: <Group_Payment />,
+      },
+      {
+        path: 'mypage/group/payment/register',
+        element: <MyPage_PaymentRegister />,
       },
       {
         path: 'mypage/leave',

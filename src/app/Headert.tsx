@@ -1,5 +1,6 @@
 import Icon_Back from '@/assets/icons/icon_Back.svg'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 interface HeaderProps {
   title?: string
@@ -7,9 +8,15 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title }) => {
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleBackClick = () => {
-    navigate(-1) // 이전 페이지로 돌아가기
+    // /mypage/group/payment 경로일 때는 /mypage로 이동
+    if (location.pathname === '/mypage/group/payment') {
+      navigate('/mypage')
+    } else {
+      navigate(-1) // 다른 경로에서는 이전 페이지로 돌아가기
+    }
   }
 
   return (

@@ -66,13 +66,22 @@ const PaymentRegister: React.FC = () => {
 
     if (dayOfMonth >= 1 && dayOfMonth <= 15) {
       setPaymentDay('SECOND_SUNDAY')
+      apiClient.patch('/api/family', {
+        paymentDay: 'SECOND_SUNDAY',
+      })
     } else {
       setPaymentDay('FOURTH_SUNDAY')
+      apiClient.patch('/api/family', {
+        paymentDay: 'FOURTH_SUNDAY',
+      })
     }
   }, [])
 
   const handleDateChange = (value: string | number) => {
     setPaymentDay(value as string)
+    apiClient.patch('/api/family', {
+      paymentDay: value,
+    })
   }
 
   const handleStart = () => {
