@@ -27,6 +27,7 @@ import MyInfo_EditPage from '@/pages/MyPage/MyInfo_EditPage'
 import Group_Payment from '@/pages/MyPage/Group_Payment'
 import LeavePage from '@/pages/MyPage/LeavePage'
 import HomePage from '@/pages/HomePage'
+import FeedboxPage from '@/pages/FeedboxPage'
 import MyPage_PaymentRegister from '@/pages/MyPage/MyPage_PaymentRegister'
 
 export const router = createBrowserRouter([
@@ -140,6 +141,10 @@ export const router = createBrowserRouter([
         path: 'home',
         element: <HomePage />
       },
+      {
+        path: '/feedbox',
+        element: <FeedboxPage />
+      }
     ],
   },
   {
