@@ -58,6 +58,7 @@ export default function ComposePhotosPage() {
       setPreviewOpen(false);
       // navigate('/preview', { state: { layoutId: selectedLayout.id } });
       alert("등록 완료!");
+      navigate('/home');
     } catch (e) {
       console.error(e);
       alert("등록 중 오류가 발생했습니다.");
