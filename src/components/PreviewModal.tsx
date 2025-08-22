@@ -1,4 +1,4 @@
-import React from "react";
+
 
 type Slot = { colSpan: number; rowSpan: number };
 type LayoutPreviewDef = Record<string, { slots: Slot[] }>;

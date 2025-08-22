@@ -7,6 +7,7 @@ import { Subscription_Info } from "@/components/Subscription_Info"
 import { apiClient } from "@/shared/api/client"
 import { useLeaderStore } from "@/stores/Leader.store"
 import { useMyInfoStore } from "@/stores/myInfo.store"
+import { usePaymentDayStore } from "@/stores/paymentDay.store"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -23,6 +24,7 @@ const MyPage: React.FC = () => {
         sincePaymentDay: '',
         leaderName: '',
     })
+    const {setPaymentDayStore, paymentDayStore} = usePaymentDayStore()
 
     useEffect(() => {
         apiClient.get('/api/user').then(res => {
@@ -53,6 +55,7 @@ const MyPage: React.FC = () => {
                     sincePaymentDay: res.data.data.paymentDto.sincePaymentDay,
                     leaderName: res.data.data.paymentDto.leader.name,
                 }))
+                setPaymentDayStore(res.data.data.paymentDto.feedEndDay)
             }
             console.log(res)
         })

@@ -23,7 +23,7 @@ export const Card_Reciever: React.FC<CardRecieverProps> = ({
       {/* 왼쪽 영역: 프로필 아이콘 */}
       <div className="flex items-center gap-3">
         <div className="w-[84px] h-[84px] bg-gray-400 rounded-full flex items-center justify-center">
-            <img src={imgUrl ? `https://api.deardream.r-e.kr/ipfs/${imgUrl}` : profileImage} alt="profile" className="w-[84px] h-[84px]" />
+            <img src={imgUrl ? `https://api.deardream.r-e.kr/ipfs/${imgUrl}` : profileImage} alt="profile" className="w-[84px] h-[84px] rounded-full" />
         </div>
 
         {/* 중앙 텍스트 영역 */}

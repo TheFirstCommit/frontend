@@ -10,7 +10,7 @@ import { useLeaderStore } from "@/stores/Leader.store"
 const MyFamily: React.FC = () => {
   const navigate = useNavigate()
   const { elder, member, setElder, setMembers, setLeader } = useFamilyStore()
-  const { isLeader, setIsLeader } = useLeaderStore()
+  const { setIsLeader } = useLeaderStore()
 
   const handleElderInfo = () => {
     navigate('/my-family/elder-info')
@@ -85,7 +85,7 @@ const MyFamily: React.FC = () => {
           <p className="font-semibold text-xl">가족 그룹 멤버 목록</p>
           <div className="flex flex-row items-center gap-1">
             <p>멤버 {member.members.length + 1}명</p>
-            <img src={button_plus} alt="button_plus" className="w-8 h-8" onClick={handleInvite} />
+            <img src={button_plus} alt="button_plus" className="w-8 h-8 cursor-pointer" onClick={handleInvite} />
           </div>
         </div>
         {member.leader.name && (

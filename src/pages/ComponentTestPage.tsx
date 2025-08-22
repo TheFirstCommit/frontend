@@ -1,32 +1,11 @@
-import { CTA, Button } from "@/components/Buttons"
-import { Group_Button } from "@/components/Group_Button"
-import { Radio_Button } from "@/components/RadioButton"
-import { TextField } from "@/components/TextField"
-import { TextField_WithButton } from "@/components/TextField_WithButton"
 import { Dropdown_Date } from "@/components/Dropdown_Date"
 import { Dropdown_Dynamic } from '@/components/Dropdown_Dynamic'
-import { Checkbox } from '@/components/Checkbox'
 import { useState } from 'react'
 
 export const ComponentTestPage: React.FC = () => {
-  const [text, setText] = useState('')
-  const [hasError, setHasError] = useState(false)
-  const [isValid, setIsValid] = useState(false)
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedRegion, setSelectedRegion] = useState('')
-  const [checkbox1, setCheckbox1] = useState(false)
-  const [checkbox2, setCheckbox2] = useState(true)
-
-  const testError = (value: string) => {
-    if (value.length > 3) {
-      setIsValid(true)
-      setHasError(false)
-    } else {
-      setIsValid(false)
-      setHasError(true)
-    }
-  }
 
   const handleDateChange = (formattedDate: string) => {
     setSelectedDate(formattedDate)
