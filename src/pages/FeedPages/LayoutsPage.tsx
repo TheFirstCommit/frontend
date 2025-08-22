@@ -2,14 +2,14 @@ import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const STATIC_IMAGES: string[] = [
-  "public/images/layout1.png",
-  "public/images/layout2.png",
-  "public/images/layout3.png",
-  "public/images/layout4.png",
-  "public/images/layout5.png",
-  "public/images/layout6.png",
-  "public/images/layout7.png",
-  "public/images/layout8.png",
+  "/images/layout1.png",
+  "/images/layout2.png",
+  "/images/layout3.png",
+  "/images/layout4.png",
+  "/images/layout5.png",
+  "/images/layout6.png",
+  "/images/layout7.png",
+  "/images/layout8.png",
 ];
 
 type Layout = {
@@ -19,22 +19,22 @@ type Layout = {
 };
 
 const LAYOUTS: Layout[] = [
-  { id: "one-portrait", thumb: "public/images/layout1.png" },
-  { id: "one-landscape", thumb: "public/images/layout2.png" },
+  { id: "one-portrait", thumb: "/images/layout1.png" },
+  { id: "one-landscape", thumb: "/images/layout2.png" },
 
-  { id: "two-h", thumb: "public/images/layout3.png" },
-  { id: "two-v", thumb: "public/images/layout4.png", },
+  { id: "two-h", thumb: "/images/layout3.png" },
+  { id: "two-v", thumb: "/images/layout4.png", },
 
   // 위 1행: 1칸+1칸, 아래 2행: 큰 1칸(두 행 차지)
-  { id: "2plus1", thumb: "public/images/layout5.png" },
+  { id: "2plus1", thumb: "/images/layout5.png" },
 
   // 위 2행: 큰 1칸(두 행 차지), 아래 1행: 1칸+1칸
-  { id: "1plus2", thumb: "public/images/layout6.png" },
+  { id: "1plus2", thumb: "/images/layout6.png" },
 
   // 위 1행: 1칸+1칸, 아래 가운데 1칸
-  { id: "2top1bottom", thumb: "public/images/layout7.png" },
+  { id: "2top1bottom", thumb: "/images/layout7.png" },
 
-  { id: "two-by-two", thumb: "public/images/layout8.png" }
+  { id: "two-by-two", thumb: "/images/layout8.png" }
 ];
 
 function LayoutCard({
