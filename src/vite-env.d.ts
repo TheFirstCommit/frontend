@@ -5,4 +5,3 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
-VITE_FILE_GATEWAY=https://deardream.r-e.kr/ipfs

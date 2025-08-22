@@ -20,7 +20,7 @@ export const apiClient = axios.create({
 
 export const apiClientPublic = axios.create({
   baseURL: 'https://api.deardream.r-e.kr/',
-  withCredentials: false,
+  withCredentials: true,
 })
 
 // refresh토큰 로직

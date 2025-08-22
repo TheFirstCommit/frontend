@@ -23,8 +23,24 @@ type HomeApiResponse = { message: string; data: HomeDTO };
     return `${base}/api/files/${img.cid}/${img.id}`;
 };*/
 const FILE_BASE =
-  (import.meta as any).env?.VITE_FILE_GATEWAY ||
-  `${(apiClient.defaults.baseURL ?? '').replace(/\/+$/, '')}/api/files`;
+  import.meta.env.VITE_FILE_GATEWAY?.replace(/\/+$/, "") ||
+  `${(apiClient.defaults.baseURL ?? "").replace(/\/+$/, "")}/api/files`;
+
+const toHttpUrl = (cid: string) => {
+  // ipfs://<cid> → <BASE>/ipfs/<cid>
+  const m = cid.match(/^ipfs:\/\/(.+)$/i);
+  if (m) return `${FILE_BASE}${/\/ipfs$/i.test(FILE_BASE) ? "" : "/"}${/\/ipfs$/i.test(FILE_BASE) ? "" : "ipfs/"}${m[1]}`;
+
+  // 이미 http(s) 절대 URL이면 그대로
+  if (/^https?:\/\//i.test(cid)) return cid;
+
+  // 일반 CID (Qm... or bafy...) → 게이트웨이 or REST
+  if (/\/ipfs$/i.test(FILE_BASE)) {
+    return `${FILE_BASE}/${cid}`; // 게이트웨이: id 없이 CID만으로 접근
+  }
+  // REST 스타일: /api/files/{cid}
+  return `${FILE_BASE}/${cid}`;
+};
 
 const buildFileUrl = (img?: ImageRef | null) => {
   if (!img) return undefined;
@@ -128,6 +144,7 @@ export default function HomePage() {
         (async () => {
         try {
             const res = await apiClient.get<HomeApiResponse>("/api/family/home", { signal: ctrl.signal });
+            console.log(import.meta.env.VITE_FILE_GATEWAY)
             setData(res.data.data);
         } catch (e: any) {
             if (e?.name === "CanceledError" || e?.code === "ERR_CANCELED") return;
@@ -142,6 +159,7 @@ export default function HomePage() {
 
     const familyName = data?.family.familyName ?? "우리 가족";
     const memberCount = data?.family.memberCount ?? 0;
+    
 
     return (
         <div className="min-h-screen bg-gray-50 pb-24">
