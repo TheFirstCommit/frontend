@@ -33,7 +33,7 @@ export const NavBar: React.FC = () => {
   }
 
   const handlePostingClick = () => {
-    navigate('/posting') // 포스팅 페이지로 이동
+    navigate('/layouts') // 포스팅 페이지로 이동
   }
 
   /*const hideTab = matchPath(location.pathname, HIDE_TAB_ROUTES)*/
@@ -72,7 +72,7 @@ export const NavBar: React.FC = () => {
                 {/* 포스팅 버튼 (중앙) */}
                 <div
                     className="cursor-pointer transform -translate-y-2"
-                    onClick={() => handleTabClick('/posting')}
+                    onClick={() => handleTabClick('/layouts')}
                 >
                     <img
                     src={Icon_Posting}

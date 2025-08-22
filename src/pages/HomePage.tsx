@@ -17,10 +17,29 @@ type HomeDTO = {
 };
 type HomeApiResponse = { message: string; data: HomeDTO };
 
-const buildFileUrl = (img?: ImageRef | null) => {
+/*const buildFileUrl = (img?: ImageRef | null) => {
     if (!img) return undefined;
     const base = apiClient.defaults.baseURL?.replace(/\/+$/, "") ?? "";
     return `${base}/api/files/${img.cid}/${img.id}`;
+};*/
+const FILE_BASE =
+  (import.meta as any).env?.VITE_FILE_GATEWAY ||
+  `${(apiClient.defaults.baseURL ?? '').replace(/\/+$/, '')}/api/files`;
+
+const buildFileUrl = (img?: ImageRef | null) => {
+  if (!img) return undefined;
+  if (/^https?:\/\//i.test(img.cid)) return img.cid;
+
+  const base = String(FILE_BASE).replace(/\/+$/, '');
+
+  // 2) 게이트웨이 모드(`/ipfs`)면 보통 id가 없어도 CID만으로 접근
+  if (/\/ipfs$/i.test(base)) {
+    // 백엔드가 id를 쓰면 뒤에 `/${img.id}` 붙여도 됨
+    return `${base}/${img.cid}${img.id != null ? `/${img.id}` : ''}`;
+  }
+
+  // 3) 기존 백엔드 REST 스타일
+  return `${base}/${img.cid}/${img.id}`;
 };
 
 const formatTime = (iso: string) => {
