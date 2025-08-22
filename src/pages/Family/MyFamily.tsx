@@ -17,7 +17,7 @@ const MyFamily: React.FC = () => {
   }
 
   const handleInvite = () => {
-    navigate('/family/invite')
+    navigate('/invite-code')
   }
 
   useEffect(() => {

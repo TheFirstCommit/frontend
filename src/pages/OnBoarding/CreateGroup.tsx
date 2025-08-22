@@ -211,7 +211,7 @@ const CreateGroup: React.FC = () => {
             onChange={handleElderBirthChange}
             hasError={!!errorMessage.elderBirth}
             errorMessage={errorMessage.elderBirth || ''}
-            defaultYear={1970}
+            defaultYear={1950}
           />
         </div>
 

@@ -15,6 +15,8 @@ const Group_Payment: React.FC = () => {
         cardNumber: '',
     })
     const [memberList, setMemberList] = useState([])
+    const [isLeader, setIsLeader] = useState(false)
+    const [memberCount, setMemberCount] = useState(0)
 
     useEffect(() => {
         apiClient.get('/api/user/delete').then(res => {
@@ -24,12 +26,18 @@ const Group_Payment: React.FC = () => {
                     name: member.name,
                 }))
                 setMemberList(members)
+                setMemberCount(res.data.data.familyMember.memberCount)
+                setIsLeader(res.data.data.isLeader)
             }
         })
     },[])
 
     const handleUnsubscribe = () => {
-        setLeaderChange(true)
+        if(memberCount > 1 && isLeader) {
+            setUnSubCheck(true)
+        } else {
+            setLeaderChange(true)
+        }
     }
 
     const handleUnsubCheck = () => {
